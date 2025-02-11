@@ -1,0 +1,168 @@
+@import url("../../.cache/wal/colors-waybar.css");
+
+* {
+  font-family: JetBrainsMono, "Font Awesome 6 Free";
+  font-size: 13px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: none;
+  border: 1px solid @color14;
+  border-radius: 12px;
+  margin: 0px 100px;
+  padding: 0px 200px;
+  transition: all 0.3s ease;
+}
+
+/* Common module styling */
+#workspaces,
+#window,
+#clock\\.2,
+#clock\\.3,
+#pulseaudio,
+#memory,
+#bluetooth,
+#cpu,
+#battery,
+#disk,
+#network,
+#tray,
+#custom-spotify-player {
+  background: @color0;
+  border-radius: 8px;
+  margin: 4px 6px;
+  padding: 4px 12px;
+  transition: background 0.2s ease;
+}
+
+/* Right modules container */
+.modules-right {
+  margin: 0px;
+  /* Increased side margins */
+  padding: 0px 0px;
+  border-radius: 8px;
+  background: none;
+  border-left: 2px solid @color14;
+}
+
+/* Center modules / Clock styling */
+.modules-center {
+  margin: 0 15px;
+  /* Added margin for center section */
+}
+
+/* Add subtle hover effects to modules */
+#pulseaudio:hover,
+#battery:hover,
+#disk:hover,
+#network:hover,
+#bluetooth:hover,
+#cpu:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#clock.2,
+#clock.3 {
+  background-color: @color0;
+  color: @color13;
+  font-weight: bold;
+  padding: 4px 15px;
+  margin: 4px 2px;
+  border-left: 1px solid @color14;
+  border-right: 1px solid @color14;
+  /* Increased margin between clock modules */
+}
+
+/* Left modules container */
+.modules-left {
+  margin: 0px;
+  /* Added margin for left section */
+  border-radius: 8px;
+  border-right: 2px solid @color14;
+}
+
+/* Workspaces styling */
+#workspaces {
+  background-color: @color0;
+  margin: 4px 6px;
+  padding: 4px 8px;
+}
+
+#workspaces button {
+  color: @color1;
+  padding: 2px 8px;
+  margin: 0 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+#workspaces button.active {
+  color: @color14;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+#workspaces button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: @color14;
+  border-radius: 6px;
+}
+
+/* Window title */
+#window {
+  margin: 4px 8px;
+  margin-right: 0px;
+  padding: 4px 12px;
+}
+
+/* System modules */
+#pulseaudio,
+#battery,
+#disk,
+#network {
+  color: @color13;
+  padding: 4px 12px;
+  margin: 4px 6px;
+  min-width: 50px;
+}
+
+/* Tray styling */
+#tray {
+  background: @color0;
+  padding: 4px 12px;
+  margin: 4px 8px;
+  margin-left: 0px;
+  border-radius: 8px;
+}
+
+/* Spotify modules */
+/*#custom-spotify-player,*/
+/*#custom-prevspot,*/
+/*#custom-nextspot,*/
+/*#custom-playspot,*/
+/*#custom-playerctl {*/
+/*  background-color: @color0;*/
+/*  color: @color13;*/
+/*  padding: 4px 12px;*/
+/*  margin: 4px 4px;*/
+/*  border-radius: 8px;*/
+/*}*/
+
+/* Battery states */
+#battery.warning {
+  color: #ff9900;
+}
+
+#battery.critical {
+  color: #ff0000;
+}
+
+#battery.charging {
+  color: #00ff00;
+}
+
+/* Network states */
+#network.disconnected {
+  color: #ff0000;
+}

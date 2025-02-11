@@ -1,0 +1,157 @@
+// -*- mode: json -*-
+{
+  "layer": "top",
+  "position": "top",
+  "reload_style_on_change": true,
+  "margin-left": 5,
+  "margin-right": 5,
+  "margin-bottom": 2,
+  "modules-left": ["hyprland/workspaces", "hyprland/window", "custom/spotify"],
+  "modules-center": [ "clock#2",  "clock#3"],
+  "modules-right": [
+    "tray",
+    "pulseaudio",
+    "battery",
+    "disk",
+    "bluetooth",
+    "cpu",
+    "network",
+  ],
+  "clock#2": {
+    "format": "{:%I:%M %p}",
+    "tooltip": false,
+  },
+  "clock#3": {
+    "format": "{:%d-%m %a}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#ffead3' font-size='large'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9' font-size='large'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd' font-size='large'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66' font-size='large'><b>{}</b></span>",
+        "today": "<span color='#ff6699' font-size='large'><b><u>{}</u></b></span>",
+      },
+    },
+    "actions": {
+      "on-click-right": "mode",
+    },
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume:2}%",
+    "format-bluetooth": "{icon}  {volume}%",
+    "format-muted": "󰝟 ",
+    "format-icons": {
+      "headphone": " ",
+      "headset": "󰋎 ",
+      "default": ["", ""],
+    },
+    "scroll-step": 5,
+    "on-click": "pamixer -t",
+    "on-click-right": "pavucontrol",
+  },
+  "memory": {
+    "interval": 5,
+    "format": "Mem {}%",
+  },
+  "bluetooth": {
+    "format": " {status}",
+    "format-connected": " {device_alias}",
+    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+  },
+  "cpu": {
+    "interval": 5,
+    "format": "CPU {usage:2}%",
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {icon} {capacity}%",
+    "format-pluged": " {icon} {capacity}%",
+    "format-icons": {
+      "default": ["", "", "", "", ""],
+    },
+  },
+  "disk": {
+    "interval": 5,
+    "format": "Disk {percentage_used:2}%",
+    "path": "/",
+  },
+  "network": {
+    "interface": "wlp3s0",
+    "format-disconnected": "睊 Disconnected",
+    "format-connected": "{essid} ({ipaddr})",
+    "format-alt": "{essid} ({signalStrength}%)",
+    "interval": 10,
+    "tooltip-format": "Connected to {essid} via {ifname}\nIP: {ipaddr}\nSignal: {signalStrength}%",
+    "icons": {
+      "ethernet": "",
+      "wifi": "",
+      "disconnected": "睊",
+    },
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 3,
+  },
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "on-click": "activate",
+     //"format": "{icon}:[ {windows} ]",
+    "format": "{icon} ",
+    "format-icons": {
+      "active": " ",
+    },
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": [],
+    },
+     "window-rewrite-default": "",
+     "window-rewrite": {
+       "title<.*youtube.*>": "", // Windows whose titles contain "youtube"
+       "class<brave>": " ", // Windows whose classes are "firefox"
+       "nvim": "",
+     },
+  },
+  "hyprland/window": {
+    "format": " {title}",
+    "icon-size": 20,
+    "max-length": 35,
+    "rewrite": {
+      "(.*)Brave": " $1",
+      "(.*) Mozilla Firefox": " $1",
+      ".*nvim(.*)": " [ NVIM ]",
+      ".*[^n]vim(.*)": " [ VIM ]",
+      ".*spotify.*": "󰓇 Spotify",
+      ".*thunar.*": "󰉋 Files",
+      ".*kitty.*": "󰆍 ",
+    },
+    "separate-outputs": true,
+  },
+  "custom/todo-list": {
+    "format": "{}",
+    "interval": 5,
+    "exec": "~/.config/waybar/scripts/todo_list.sh",
+    "tooltip-format": "To-Do List:\n{list}",
+    "on-click": "~/.config/waybar/scripts/todo_list.sh add",
+    "on-click-right": "~/.config/waybar/scripts/todo_list.sh complete",
+    "escape": true
+  }
+}

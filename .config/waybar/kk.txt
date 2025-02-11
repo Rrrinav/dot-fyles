@@ -1,0 +1,161 @@
+
+ * {
+  font-size: 13px;
+  font-family: JetBrainsMono;
+}
+
+window#waybar {
+  border: 1px solid #ffccff;
+  padding: 5px;
+  background: none;
+  margin: 0px 10px;
+  opacity: 0.8;
+  color: @color7;
+}
+
+#workspaces,
+#window,
+#clock.2,
+#clock.3,
+#pulseaudio,
+#memory,
+#bluetooth,
+#cpu,
+#battery,
+#disk,
+#network,
+#tray,
+#custom-spotify {
+  background: none;
+
+  /*border: 1px solid @color7;*/
+
+  border-radius: 2px;
+  padding: 3px 5px;
+  margin: 1px 2px;
+  margin-bottom: 3px;
+
+}
+
+#tray {
+  background: @color0;
+  padding: 0px 8px;
+  margin: 2px;
+  margin-right: 10px;
+  border-radius: 10px;
+  opacity: 0.9;
+
+}
+
+#clock.2,
+#clock.3 {
+  /* opacity: 0.8; */
+
+  background-color: @color0;
+  color: @color13;
+  padding: 3px 15px;
+
+}
+
+.modules-right {
+  opacity: 0.8;
+  background-color: @color0;
+  color: @color13;
+  border-radius: 0px;
+}
+
+#window {
+  background-color: @color0;
+  color: @color13;
+}
+
+#workspaces {
+  background-color: @color0;
+  margin-right: 5px;
+}
+
+#workspaces button {
+  padding: 0 2px;
+  margin-right: 8px;
+  color: @color1;
+}
+
+#workspaces button.active {
+  color: @color14;
+}
+
+#workspaces button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+
+}
+
+#workspaces button:hover {
+  background: #1a1a1a;
+  border: #1a1a1a;
+  padding: 0 3px;
+}
+
+/ #pulseaudio {
+
+  color: #0089eb;
+  */ color: @color13;
+
+}
+
+#battery {
+
+  /* color: #0089eb; */
+
+  color: @color13;
+
+}
+
+#disk {
+
+  /* color: #0089eb; */
+
+  color: @color13;
+
+}
+
+#network {
+
+  /* color: #0089eb; */
+
+  color: @color13;
+
+}
+
+#clock,
+#pulseaudio,
+#memory,
+#cpu,
+#battery,
+#disk {
+  padding: 0 10px;
+
+}
+
+#custom-spotify {
+  background-color: @color0;
+  color: @color13;
+  padding: 3px 15px;
+
+}
+
+#custom-prevspot,
+#custom-nextspot,
+#custom-playspot {
+  background-color: @color0;
+  color: @color13;
+  padding: 3px 15px;
+
+}
+
+#custom-playerctl {
+  background-color: @color0;
+  color: @color13;
+  padding: 3px 15px;
+
+}
