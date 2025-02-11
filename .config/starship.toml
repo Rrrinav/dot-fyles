@@ -1,0 +1,170 @@
+# format = '''
+# [┌─>](bold green)$username\
+# [$directory$pyhton$package]\
+# [└──────>](bold green) '''
+
+#honeycomb ice pixelated 
+#[┌─](fg:#b5f5d2 bold)[  ](bold blue fg:#b5f5d2)\
+#[  ](bold blue fg:#b5f5d2)\
+#[│](fg:#b5f5d2 bold)
+# ┌─└
+# format = """
+# [┌─](fg:#fafafa  bold)\
+# [\\[](fg:#fafafa bold)[ ](bold blue fg:#fafafa)\
+# $username\
+# $os\
+# $time\
+# [ \\]](bold blue fg:#fafafa)\
+# [ -](#fafafa)\
+# $directory\
+# $git_branch\
+# $git_status\
+# $python\
+# $custom\
+# $c\
+# $elixir\
+# $elm\
+# $golang\
+# $haskell\
+# $java\
+# $julia\
+# $nodejs\
+# $nim\
+# $rust
+# [└──](fg:#fafafa bold)\
+# $character\
+# """
+
+
+#$username\
+# [  ](fg:#fafafa bold)\
+format = """
+[\\[](fg:#fafafa bold)[ ](bold blue fg:#fafafa)\
+$time\
+[ \\]](bold blue fg:#fafafa)\
+$directory\
+$git_branch\
+$git_status\
+$python\
+$custom\
+$c\
+$elixir\
+$elm\
+$golang\
+$haskell\
+$java\
+$julia\
+$nodejs\
+$nim\
+$rust\
+[  ](fg:#fafafa bold)
+$character\
+"""
+
+
+right_format = """$cmd_duration"""
+add_newline = true
+
+command_timeout = 5000
+# Disable the blank line at the start of the prompt
+# add_newline = false
+
+[cmd_duration]
+format = "took [$duration](bold yellow)"
+
+# You can also replace your username with a neat symbol like  to save some space
+[character]
+success_symbol = '[ ](fg:#09aa09)'
+error_symbol = '[ ](bold red)'
+
+# ~/.config/starship.toml
+# 
+[os]
+format = "[$symbol ]($style)"
+style = "bold fg:#b5f5d2"
+disabled = false
+
+[os.symbols]
+Windows = " "
+Arch = "Arch is the best! "
+Fedora = "  "
+
+[username]
+show_always = true
+style_user = "fg:#fafafa"
+format = '[$user ]($style)'
+
+[directory]
+style = "fg:#8f8fef"
+format = '\[[$path]($style)\]'
+truncation_length = 3
+truncation_symbol = "../"
+
+[c]
+symbol = " "
+style = "fg:#27e359"
+format = '-\[[$symbol($version(-$name))]($style)\]'
+
+[docker_context]
+symbol = " "
+style = "fg:#27e359"
+format = '-\[[$symbol$context]($style)\]'
+
+[elixir]
+symbol = " "
+style = "fg:#27e359"
+format = '-\[[$symbol($version \(OTP $otp_version\))]($style)\]'
+
+[git_branch]
+symbol = " "
+style = "fg:#07a5e8"
+format = '-\[[$symbol$branch]($style)\]'
+
+[git_status]
+style = "fg:#07a5e8"
+format = '([\[$all_status$ahead_behind\]]($style))'
+
+[golang]
+symbol = " "
+style = "fg:#27e359"
+format = '-\[[$symbol($version)]($style)\]'
+
+[haskell]
+symbol = " "
+style = "fg:#27e359"
+format = '-\[[$symbol($version)]($style)\]'
+
+[java]
+symbol = " "
+style = "fg:#27e359"
+format = '-\[[$symbol($version)]($style)\]'
+
+[nodejs]
+symbol = " "
+style = "fg:#27e359"
+format = '-\[[$symbol($version)]($style)\]'
+
+[python]
+style = "fg:#27e359"
+# format = '[(\($virtualenv\) )]($style)'
+format = '-\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
+
+[rust]
+symbol = ""
+style = "fg:#27e359"
+format = '-\[[$symbol($version)]($style)\]'
+
+[time]
+disabled = false
+time_format = "%R"               # Hour:Minute Format
+style ="fg:#a9a9a9"
+format = '\([ $time ]($style)\)'
+
+[custom.cpp]
+detect_extensions = ['cpp', 'hpp', 'cc', 'hxx']
+symbol = " "
+style = "fg:#27e359"
+format = '-\[[ $symbol ($output) ]($style)\]'
+command = "g++ --version | awk 'NR==1 {print $3}'"
+
+# This is the default symbols table.
