@@ -58,7 +58,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end
     end,
 })
-
+-- JavaScript, TypeScript, JSX, TSX, JSON
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json" },
+  callback = function()
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+    vim.opt_local.softtabstop = 2
+    vim.opt_local.expandtab = true
+  end,
+})
 
 vim.api.nvim_create_autocmd('CmdwinEnter', {
     group = vim.api.nvim_create_augroup('mariasolos/execute_cmd_and_stay', { clear = true }),

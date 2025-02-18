@@ -194,7 +194,33 @@ return {
             vim.g.rose_pine_variant = "main"
         end,
     },
-    { "tiagovla/tokyodark.nvim", },
+    {
+        "EdenEast/nightfox.nvim",
+        opts = {
+            options = {
+                styles = {
+                    comments = "italic",
+                    keywords = "bold",
+                    types = "italic,bold",
+                    strings = "italic",
+                }
+            }
+        }
+    },
+    {
+        "gbprod/nord.nvim",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            require("nord").setup({})
+
+        end,
+    },
+    {
+        "ellisonleao/gruvbox.nvim", 
+        priority = 1000 , 
+        config = true
+    },
     {
         "sainnhe/sonokai",
         config = function()
@@ -257,7 +283,11 @@ return {
                 else
                     return " "
                 end
-                
+            end
+
+            local get_buf_count = function()
+                local bufs = require('tabby.module.api').get_bufs()
+                return #bufs
             end
 
             -- Setup tabby configuration
@@ -305,6 +335,8 @@ return {
                         -- Tail section
                         {
                             line.sep('', theme.tail, theme.fill),
+                            get_buf_count(),
+                            { ' ' },
                             { ' ', hl = theme.tail },
                         },
                         hl = theme.fill,
@@ -336,6 +368,8 @@ return {
                 ["<leader><Tab>o"] = { cmd = ":tabonly<CR>", desc = "Close other tabs" },
                 ["<leader><Tab>n"] = { cmd = ":tabn<CR>", desc = "Next tab" },
                 ["<leader><Tab>p"] = { cmd = ":tabp<CR>", desc = "Previous tab" },
+                ["]t"] = { cmd = ":tabn<CR>", desc = "Next tab" },
+                ["[t"] = { cmd = ":tabp<CR>", desc = "Previous tab" },
                 ["<leader><Tab>mp"] = { cmd = ":-tabmove<CR>", desc = "Move tab back" },
                 ["<leader><Tab>mn"] = { cmd = ":+tabmove<CR>", desc = "Move tab forward" },
             }
@@ -345,157 +379,6 @@ return {
             end
         end
     },
-    -- {
-    --     'nanozuki/tabby.nvim',
-    --     dependencies = 'nvim-tree/nvim-web-devicons',
-    --     config = function()
-    --         -- Custom Theme
-    --         local theme = {
-    --             fill = 'Tabline',
-    --             head = { fg = '#94e2d5', bg = '#181825' },                -- Header section
-    --             current_tab = { fg = '#fadafa', bg = '#45475a', style = "bold" }, -- Current tab
-    --             tab = { fg = '#74c7ec', bg = '#313244' },                 -- Other tabs
-    --             win = { fg = '#a6e3a1', bg = '#1e1e2e' },                 -- Windows
-    --             tail = { fg = '#94e2d5', bg = '#181825' },                -- Tail section
-    --         }
-    --         local tabby = require('tabby');
-    --         local api = require('tabby.module.api')
-    --
-    --         local function win_count(tabid)
-    --             local wins = api.get_tab_wins(tabid)
-    --             local len = #wins
-    --             if len == 1 then
-    --                 return ""
-    --             else
-    --                 return string.format("[%d]", len)
-    --             end
-    --         end
-    --
-    --         local function is_buf_modified(tabid)
-    --             local wins = api.get_tab_wins(tabid)
-    --             for _, win in ipairs(wins) do
-    --                 local buf = api.get_win_buf(win)
-    --                 if api.get_buf_is_changed(buf) then
-    --                     return "󰚕 "
-    --                 end
-    --             end
-    --             return ""
-    --         end
-    --
-    --         tabby.setup({
-    --             preset = 'active_wins_at_tail',
-    --             option = {
-    --                 theme = theme,
-    --                 nerdfont = true,
-    --                 tab_name = {
-    --                     name_fallback = function(tabid)
-    --                         local wins = win_count(tabid)
-    --                         local changed = is_buf_modified(tabid)
-    --                         local str = string.format("%s%s", wins, changed)
-    --                         return str
-    --                     end
-    --                 },
-    --             },
-    --         })
-    --
-    --         -- Set some Neovim options for best appearance
-    --         vim.opt.termguicolors = true
-    --         vim.opt.showtabline = 2
-    --         vim.api.nvim_set_keymap("n", "<leader><Tab>a", ":$tabnew<CR>", { noremap = true, desc = "New tab" })
-    --         vim.api.nvim_set_keymap("n", "<leader><Tab>c", ":tabclose<CR>", { noremap = true, desc = "Close tab" })
-    --         vim.api.nvim_set_keymap("n", "<leader><Tab>o", ":tabonly<CR>", { noremap = true, desc = "Close other tabs" })
-    --         vim.api.nvim_set_keymap("n", "<leader><Tab>n", ":tabn<CR>", { noremap = true, desc = "Next tab" })
-    --         vim.api.nvim_set_keymap("n", "<leader><Tab>p", ":tabp<CR>", { noremap = true, desc = "Previous tab" })
-    --         -- move current tab to previous position
-    --         vim.api.nvim_set_keymap("n", "<leader><Tab>mp", ":-tabmove<CR>", { noremap = true, desc = "Move Tab back" })
-    --         -- move current tab to next position
-    --         vim.api.nvim_set_keymap("n", "<leader><Tab>mn", ":+tabmove<CR>",
-    --             { noremap = true, desc = "Move Tab forward" })
-    --     end,
-    -- },
-    -- {
-    --   "akinsho/bufferline.nvim",
-    --   version = "*",
-    --   dependencies = "nvim-tree/nvim-web-devicons",
-    --   config = function()
-    --     require("bufferline").setup({
-    --       options = {
-    --         mode = "buffers",
-    --         numbers = "ordinal",
-    --         always_show_bufferline = true,
-    --         show_buffer_close_icons = true,
-    --         show_tab_indicators = true,
-    --         diagnostics = "nvim_lsp", -- Enable LSP diagnostics
-    --         diagnostics_indicator = function(count, level)
-    --           local icon = level:match("error") and " " or " "
-    --           return " " .. icon .. count
-    --         end,
-    --         format = function(buf)
-    --             -- Extract only the filename from the full path
-    --             local name = vim.fn.fnamemodify(buf.name, ":t")
-    --             return name
-    --         end,
-    --         get_element_icon = function(element)
-    --           -- element consists of {filetype: string, path: string, extension: string, directory: string}
-    --           -- This can be used to change how bufferline fetches the icon
-    --           -- for an element e.g. a buffer or a tab.
-    --           -- e.g.
-    --           local icon, hl = require('nvim-web-devicons').get_icon_by_filetype(element.filetype, { default = true })
-    --           return icon, hl
-    --         end,
-    --         -- Enhanced styling
-    --         modified_icon = "●",
-    --         close_icon = "",
-    --         left_trunc_marker = "<-",
-    --         right_trunc_marker = "->",
-    --         max_name_length = 18,
-    --         max_prefix_length = 15,
-    --         tab_size = 18,
-    --         offsets = {
-    --           {
-    --             filetype = "NvimTree",
-    --             text = "File Explorer",
-    --             text_align = "left",
-    --             separator = true,
-    --           },
-    --         },
-    --         color_icons = true,
-    --         show_duplicate_prefix = true,
-    --         enforce_regular_tabs = false,
-    --         hover = {
-    --           enabled = true,
-    --           delay = 200,
-    --           reveal = { "close" },
-    --         },
-    --       },
-    --       highlights = {
-    --         buffer_selected = {
-    --           bold = false,
-    --           italic = true,
-    --         },
-    --         diagnostic_selected = {
-    --           bold = true,
-    --         },
-    --         info_selected = {
-    --           bold = true,
-    --         },
-    --         info_diagnostic_selected = {
-    --           bold = true,
-    --         },
-    --       },
-    --     })
-    --
-    --     -- Keep the same key mappings
-    --     -- local opts = { noremap = true, silent = true }
-    --     -- vim.keymap.set('n', '[b', ':bprevious<CR>', opts)
-    --     -- vim.keymap.set('n', ']b', ':bnext<CR>', opts)
-    --     -- vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', opts)
-    --     -- vim.keymap.set('n', '<leader>bo', ':BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>', opts)  -- Close all except current
-    --     -- vim.keymap.set('n', '<leader>ba', ':BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>:bd<CR>', opts)  -- Close all buffers
-    --     vim.keymap.set("n", "<leader>bl", ":BufferLineCloseLeft<CR>")
-    --     vim.keymap.set("n", "<leader>bl", ":BufferLineCloseRight<CR>")
-    --   end,
-    -- },
     {
         "lewis6991/gitsigns.nvim",
         config = function()

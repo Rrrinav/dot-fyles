@@ -1,5 +1,6 @@
 # .bashrc
 export USER="admin"
+export EDITOR="nvim"
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
@@ -38,14 +39,6 @@ cat ~/.cache/wal/sequences
 source ~/.cache/wal/colors-tty.sh
 
 
-export STARSHIP_WAL_COLOR1=$(jq -r '.colors.color1' ~/.cache/wal/colors.json)
-export STARSHIP_WAL_COLOR2=$(jq -r '.colors.color2' ~/.cache/wal/colors.json)
-export STARSHIP_WAL_COLOR3=$(jq -r '.colors.color3' ~/.cache/wal/colors.json)
-export STARSHIP_WAL_COLOR4=$(jq -r '.colors.color4' ~/.cache/wal/colors.json)
-export STARSHIP_WAL_COLOR5=$(jq -r '.colors.color5' ~/.cache/wal/colors.json)
-export STARSHIP_WAL_COLOR6=$(jq -r '.colors.color6' ~/.cache/wal/colors.json)
-export STARSHIP_WAL_COLOR7=$(jq -r '.colors.color7' ~/.cache/wal/colors.json)
-
 eval "$(starship init bash)"
 
 alias ls='lsd'
@@ -53,5 +46,3 @@ alias cat='bat'
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-
-# fortune

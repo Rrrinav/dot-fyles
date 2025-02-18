@@ -12,13 +12,15 @@ return
             },
             completion = {
                 documentation = {
-                    auto_show = false,
+                    auto_show = true,
                     auto_show_delay_ms = 400,
                     window = {
                         border = "rounded",
                         winhighlight = "FloatBorder:FloatBorder"
                     },
                 },
+                keyword = {range = "full"},
+                list = { selection = { preselect = true, auto_insert = false } },
                 menu = {
                     -- border = "rounded",
                     winhighlight = "FloatBorder:FloatBorder",
@@ -27,6 +29,7 @@ return
                             { "kind_icon",         "label", gap = 1 },
                             { "label_description", "kind",  gap = 1 }
                         },
+                        treesitter = {"lsp"}
                     }
                 },
                 ghost_text = {
@@ -53,9 +56,12 @@ return
                     },
                 },
             },
-            signature = { enabled = true },
+            signature = { 
+                enabled = true,
+                window = {border = "single"}
+            },
             appearance = {
-                kind_icons = require('../icons'). autocomplete,
+                kind_icons = require('../icons').autocomplete,
             },
             keymap = {
                 preset = 'none',
@@ -69,14 +75,16 @@ return
                 ['<C-n>'] = { 'select_next', 'fallback' },
                 ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
                 ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
-                cmdline = {
+            },
+            cmdline = {
+                keymap = {
                     preset = 'none',
                     ['<C-p>'] = { 'select_prev', 'fallback' },
                     ['<C-n>'] = { 'select_next', 'fallback' },
                     ['<C-y>'] = { 'accept', 'fallback' },
                     ['<Right>'] = { 'snippet_backward', 'fallback' },
                 }
-            },
+            }
         },
     },
     {
@@ -110,10 +118,10 @@ return
             max_height = nil,
             max_width_window_percentage = nil,
             max_height_window_percentage = 50,
-            window_overlap_clear_enabled = false,                                         -- toggles images when windows are overlapped
+            window_overlap_clear_enabled = false,                                               -- toggles images when windows are overlapped
             window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
-            editor_only_render_when_focused = false,                                      -- auto show/hide images when the editor gains/looses focus
-            tmux_show_only_in_active_window = false,                                      -- auto show/hide images in the correct Tmux window (needs visual-activity off)
+            editor_only_render_when_focused = false,                                            -- auto show/hide images when the editor gains/looses focus
+            tmux_show_only_in_active_window = false,                                            -- auto show/hide images in the correct Tmux window (needs visual-activity off)
             hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.avif" }, -- render image files as images when opened
         },
     },
@@ -145,13 +153,13 @@ return
     },
     {
         "okuuva/auto-save.nvim",
-        cmd = "ASToggle",                   -- optional for lazy loading on command
-        event = { "InsertLeave" },          -- optional for lazy loading on trigger events
+        cmd = "ASToggle",                           -- optional for lazy loading on command
+        event = { "InsertLeave" },                  -- optional for lazy loading on trigger events
         opts = {
-            trigger_events = {              -- See :h events
+            trigger_events = {                      -- See :h events
                 immediate_save = { "InsertLeave" }, -- vim events that trigger an immediate save
-                defer_save = { "InsertLeave" }, -- vim events that trigger a deferred save (saves after `debounce_delay`)
-            },                              -- your config goes here
+                defer_save = { "InsertLeave" },     -- vim events that trigger a deferred save (saves after `debounce_delay`)
+            },                                      -- your config goes here
             -- or just leave it empty :)
         },
     },
@@ -168,16 +176,16 @@ return
 
             -- Module mappings. Use `''` (empty string) to disable one.
             mappings = {
-                add = '<leader>msa',    -- Add surrounding in Normal and Visual modes
-                delete = '<leader>msd', -- Delete surrounding
-                find = '<leader>msf',   -- Find surrounding (to the right)
-                find_left = '<leader>msF', -- Find surrounding (to the left)
-                highlight = '<leader>msh', -- Highlight surrounding
-                replace = '<leader>msr', -- Replace surrounding
+                add = '<leader>msa',            -- Add surrounding in Normal and Visual modes
+                delete = '<leader>msd',         -- Delete surrounding
+                find = '<leader>msf',           -- Find surrounding (to the right)
+                find_left = '<leader>msF',      -- Find surrounding (to the left)
+                highlight = '<leader>msh',      -- Highlight surrounding
+                replace = '<leader>msr',        -- Replace surrounding
                 update_n_lines = '<leader>msn', -- Update `n_lines`
 
-                suffix_last = 'l',      -- Suffix to search with "prev" method
-                suffix_next = 'n',      -- Suffix to search with "next" method
+                suffix_last = 'l',              -- Suffix to search with "prev" method
+                suffix_next = 'n',              -- Suffix to search with "next" method
             },
 
             -- Number of lines within which surrounding is searched

@@ -133,3 +133,6 @@ vim.keymap.set("n", "<leader>bx", function()
         vim.notify("Can't close the last buffer!")
     end
 end, { desc = "Close buffer safely" })
+
+vim.keymap.set('n', '<leader>Q', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gIc<Left><Left><Left><Left>]],
+    { desc = 'Replace word under cursor' })

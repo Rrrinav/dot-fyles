@@ -1,6 +1,6 @@
 require("config.lazy")
 
-vim.cmd.colorscheme("onedark") -- Or any other theme
+vim.cmd.colorscheme("nightfox") -- Or any other theme
 require("config.highlights").setup()
 
 require("config.keymaps")
@@ -12,5 +12,8 @@ require("config.floating-term")
 
 vim.opt.termguicolors = true
 vim.keymap.del("", "<Tab>")
+
+vim.api.nvim_set_hl(0, "TabLineFill", { link ="Normal" })
+vim.api.nvim_set_hl(0, "TabLine",     { link = "Normal" })
 
 -- vim.o.winbar = "%f %m" -- Show filename (%f) and modified flag (%m)

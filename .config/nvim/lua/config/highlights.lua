@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-    local bg_color = "#181818"
+    local bg_color = "#1e1e1e"
     -- local bg_color = "#0E051A"
     require('transparent').clear_prefix('Telescope')
     -- Define compile-mode highlights
@@ -32,6 +32,11 @@ function M.setup()
     local statusline_fg = get_hl_color("StatusLine", "fg")
     local cursorline_bg = get_hl_color("CursorLine", "bg")
     local keyword_fg    = get_hl_color("@attribute", "fg")
+    local Operator_fg   = get_hl_color("Operator", "fg")
+    
+    -- vim.api.nvim_set_hl(0, "BlinkCmpKind",       {link = "Special"})
+    vim.api.nvim_set_hl(0, "BlinkCmpKind",       { ctermfg = 14, fg= Operator_fg })
+
 
     vim.api.nvim_set_hl(0, "MsgArea",          { fg = "#b1b1ff" })
     vim.api.nvim_set_hl(0, "VertSplit",        { bg = bg_color, fg = statusline_fg })
@@ -49,7 +54,7 @@ function M.setup()
     vim.api.nvim_set_hl(0, "FloatBorder",  { bg = bg_color }) -- General floating window border
     vim.api.nvim_set_hl(0, "WinSeparator", { bg = bg_color })
 
-    vim.api.nvim_set_hl(0, "TabLineFill", { bg = bg_color })
+    vim.api.nvim_set_hl(0, "TabLineFill", { link="Normal" })
     vim.api.nvim_set_hl(0, "TabLine",     { bg = bg_color })
     -- Telescope highlights
     vim.api.nvim_set_hl(0, "TelescopeNormal",        { bg = bg_color })
