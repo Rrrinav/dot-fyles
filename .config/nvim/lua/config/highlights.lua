@@ -31,7 +31,7 @@ function M.setup()
     end
     local statusline_fg = get_hl_color("StatusLine", "fg")
     local cursorline_bg = get_hl_color("CursorLine", "bg")
-    local keyword_fg    = get_hl_color("@attribute", "fg")
+    local keyword_fg    = get_hl_color("Constant", "fg")
     local Operator_fg   = get_hl_color("Operator", "fg")
     
     -- vim.api.nvim_set_hl(0, "BlinkCmpKind",       {link = "Special"})

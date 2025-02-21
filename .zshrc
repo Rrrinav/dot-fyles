@@ -9,11 +9,11 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:$HOME/bin:"* ]]; then
 fi
 
 if [ -d ~/.zshrc.d ]; then
-  for rc in ~/.zshrc.d/*; do
-    if [ -f "$rc" ]; then
-      source "$rc"
-    fi
-  done
+    for rc in ~/.zshrc.d/*; do
+        if [ -f "$rc" ]; then
+            source "$rc"
+        fi
+    done
 fi
 unset rc
 
@@ -87,7 +87,7 @@ HYPHEN_INSENSITIVE="true"
 # You can also set it to another string to have that shown instead of the default red dots.
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
