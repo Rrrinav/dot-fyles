@@ -1,16 +1,24 @@
 -- For better paste behavior overall
 vim.opt.mouse = "a" -- Enable mouse support
 
--- Oil nvim
-vim.keymap.set("n", "-", "<Cmd>Oil<cr>")
-vim.keymap.set("n", "<leader>fp", function()
-    require("oil").open_float()
-end, { desc = "Open Oil in a floating window" })
-vim.keymap.set("n", "<leader>fo", function()
-    -- Open the current working directory (CWD) in a floating window
-    require("oil").open_float(vim.fn.getcwd())
-end, { desc = "Open Oil in a floating window with CWD" })
+-- -------------------------------------------- OIL NVIM --------------------------------------------------------
+vim.keymap.set("n", "-",          "<Cmd>Oil<cr>")
 
+vim.keymap.set("n", "<leader>fp", 
+                function() 
+                    require("oil").open_float()
+                end,
+	            { desc = "Open Oil in a floating window" })
+
+-- Open the current working directory (CWD) in a floating window
+vim.keymap.set("n", "<leader>fo", 
+                function() 
+                    require("oil").open_float(vim.fn.getcwd())
+                end,
+                { desc = "Open Oil in a floating window with CWD" })
+
+
+-- ------------------------------------------ DIAGNOSTICS ---------------------------------------------------------
 vim.keymap.set(
     'n', '<leader>xf',
     function()
@@ -18,13 +26,6 @@ vim.keymap.set(
     end,
     { noremap = true, silent = true, desc = "Open diagnostic in float" }
 )
-
-vim.api.nvim_set_keymap('n', '<leader>cf',
-    ":lua vim.lsp.buf.format()<CR>",
-    { noremap = true, silent = true, nowait = true, desc = "Format buffer" }
-)
-
-vim.keymap.set("n", "<A-t>", "<leader>Cw<leader>R", { noremap = true, silent = true, desc = "Swap words" })
 
 local function hide_diagnostics()
     vim.diagnostic.config({ -- https://neovim.io/doc/user/diagnostic.html
@@ -40,6 +41,33 @@ local function show_diagnostics()
         underline = true,
     })
 end
+
+vim.keymap.set("n", "<leader>xh", hide_diagnostics, { noremap = true, desc = "Hide diagnostics" })
+vim.keymap.set("n", "<leader>xs", show_diagnostics, { noremap = true, desc = "Show diagnostics" })
+
+
+-- ----------------------------------------------------- LSP -----------------------------------------------------
+vim.api.nvim_set_keymap('n', '<leader>cf',
+    ":lua vim.lsp.buf.format()<CR>",
+    { noremap = true, silent = true, nowait = true, desc = "Format buffer" }
+)
+
+-- Only format selected text
+vim.keymap.set("v", "<leader>cf", function()
+  local start_pos = vim.fn.getpos("'<")
+  local end_pos = vim.fn.getpos("'>")
+
+  vim.lsp.buf.format({
+    range = {
+      ["start"] = { start_pos[2], start_pos[3] - 1 },
+      ["end"] = { end_pos[2], end_pos[3] },
+    },
+  })
+end, { desc = "Format selection with LSP" })
+
+
+vim.keymap.set("n", "<A-t>", "<leader>Cw<leader>R", { noremap = true, silent = true, desc = "Swap words" })
+
 
 vim.keymap.set("n", "<leader>fe",
     function()
@@ -66,8 +94,6 @@ vim.keymap.set("n", "<leader>do",
     end,
     { noremap = true, desc = "Open picker for pickers, bwaha!" });
 
-vim.keymap.set("n", "<leader>xh", hide_diagnostics, { noremap = true, desc = "Hide diagnostics" })
-vim.keymap.set("n", "<leader>xs", show_diagnostics, { noremap = true, desc = "Show diagnostics" })
 vim.api.nvim_set_keymap('n', '<leader>ca', ':lua vim.b.completion = false<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>ce', ':lua vim.b.completion = true<CR>', { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>xt", ":TodoQuickFix<CR>", { noremap = true, desc = "List todos" })
@@ -104,7 +130,7 @@ end, { desc = 'Escape, clear hlsearch, and stop snippet session', expr = true })
 
 -- Exit terminal mode with <C-/>
 vim.keymap.set("t", "<C-/>", "<C-\\><C-n>:q<Cr>", { desc = "Exit terminal mode" })
-vim.keymap.set('n', '<leader>cc', ":Compile", { desc = "Enter compile mode", noremap = true })
+vim.keymap.set('n', '<leader>cc', ":Compile<Cr>", { desc = "Enter compile mode", noremap = true })
 
 
 -- Switch between windows.
@@ -136,3 +162,5 @@ end, { desc = "Close buffer safely" })
 
 vim.keymap.set('n', '<leader>Q', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gIc<Left><Left><Left><Left>]],
     { desc = 'Replace word under cursor' })
+
+vim.keymap.set('n', "<leader>bg", ":Rabbit<Cr>", { desc="Buffer grab using rabbit" })

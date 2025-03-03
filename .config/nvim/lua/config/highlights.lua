@@ -3,20 +3,6 @@ local M = {}
 function M.setup()
     local bg_color = "#1e1e1e"
     -- local bg_color = "#0E051A"
-    require('transparent').clear_prefix('Telescope')
-    -- Define compile-mode highlights
-    vim.api.nvim_set_hl(0, "CompileModeError",            { fg = "#ff5555", bold = true })      -- Soft red for errors
-    vim.api.nvim_set_hl(0, "CompileModeWarning",          { fg = "#ffcc00", bold = true })      -- Golden yellow for warnings
-    vim.api.nvim_set_hl(0, "CompileModeInfo",             { fg = "#50fa7b", bold = true })      -- Neon green for info
-    vim.api.nvim_set_hl(0, "CompileModeMessage",          { fg = "#f8f8f2" })                   -- Soft white for messages
-    vim.api.nvim_set_hl(0, "CompileModeMessageRow",       { fg = "#ff8888" })                   -- Neutral gray for row numbers
-    vim.api.nvim_set_hl(0, "CompileModeMessageCol",       { fg = "#ff8888" })                   -- Neutral gray for column numbers
-    vim.api.nvim_set_hl(0, "CompileModeCommandOutput",    { fg = "#a0a0a0" })                   -- Dim gray for command output
-    vim.api.nvim_set_hl(0, "CompileModeOutputFile",       { fg = "#ff9ff3", italic = true })    -- Warm orange for output file paths
-    vim.api.nvim_set_hl(0, "CompileModeCheckResult",      { fg = "#56c7ff" })                   -- Electric blue for check results
-    vim.api.nvim_set_hl(0, "CompileModeCheckTarget",      { fg = "#ff79c6" })                   -- Vibrant pink for check targets
-    vim.api.nvim_set_hl(0, "CompileModeDirectoryMessage", { fg = "#8be9fd" })                   -- Cyan sky blue for directory messages
-    vim.api.nvim_set_hl(0, "CompileModeErrorLocus",       { bg = "#ff4444", fg = "#ffffff" })   -- Deep red background for error locus
 
     -- Change the background color of the line numbers
     -- vim.cmd([[highlight LineNr guibg=#1e1e2e guifg=#bbbbbb]])
@@ -33,10 +19,6 @@ function M.setup()
     local cursorline_bg = get_hl_color("CursorLine", "bg")
     local keyword_fg    = get_hl_color("Constant", "fg")
     local Operator_fg   = get_hl_color("Operator", "fg")
-    
-    -- vim.api.nvim_set_hl(0, "BlinkCmpKind",       {link = "Special"})
-    vim.api.nvim_set_hl(0, "BlinkCmpKind",       { ctermfg = 14, fg= Operator_fg })
-
 
     vim.api.nvim_set_hl(0, "MsgArea",          { fg = "#b1b1ff" })
     vim.api.nvim_set_hl(0, "VertSplit",        { bg = bg_color, fg = statusline_fg })
@@ -65,15 +47,6 @@ function M.setup()
     vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { bg = bg_color })
     vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = bg_color })
     vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { bg = bg_color })
-
-    -- Match telescope selection with cursorline
-    vim.api.nvim_set_hl(0, "TelescopeSelection",      { link = "CursorLine" })
-    vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { link = "CursorLine" })
-    vim.api.nvim_set_hl(0, "TelescopeMultiSelection", { link = "Visual" })
-    vim.api.nvim_set_hl(0, "TelescopeMatching",       { link = "Search" })
-    vim.api.nvim_set_hl(0, "TelescopePromptPrefix",   { link = "Normal" })
-    vim.api.nvim_set_hl(0, "CursorLineNr",            { fg = keyword_fg , bg = cursorline_bg, italic = true })
-    vim.api.nvim_set_hl(0, "LineNr",                  { bg = bg_color }) -- Normal line numbers
 
     -- Border of which-key
     vim.api.nvim_set_hl(0, "WhichKeyBorder", { bg = bg_color })

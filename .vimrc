@@ -1,49 +1,64 @@
-" Enable line numbers
+" General settings
 set number
 set relativenumber
-
-" Show line and column number in status line
 set ruler
-
-" Highlight current line
 set cursorline
-
-" Enable line wrapping
 set wrap
-
-" Show line and column position
-set ruler
-
-" Enable syntax highlighting
-syntax enable
-
-" Enable filetype detection (for plugins)
-filetype plugin indent on
-
-" Set the default search to ignore case
+set termguicolors
+set background=dark
 set ignorecase
-
-" Highlight search results
+set smartcase
 set hlsearch
-
-" Enable auto-indentation
+set incsearch
 set smartindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
+set mouse=a
+set timeoutlen=500 
 
-" Enable clipboard support (if available)
-set clipboard='unnamedplus'
+set guioptions-=T           " Remove toolbar
+set guioptions-=m           " Remove menu bar
+set guioptions-=r           " Remove right-hand scroll bar
+set guioptions-=L           " Remove left-hand scroll bar
+set clipboard=unnamed,unnamedplus
 
+" Plugin manager (vim-plug)
 call plug#begin('~/.vim/plugged')
-    Plug 'morhetz/gruvbox'
-    Plug 'preservim/nerdtree'
+Plug 'morhetz/gruvbox'
+Plug 'preservim/nerdtree'
+Plug 'Yggdroot/indentLine'
 call plug#end()
 
-set background=dark
+" Theme and indent settings
 let g:gruvbox_bold = 1
 let g:gruvbox_italic = 1
 let g:gruvbox_contrast_dark = 'hard'
-set t_Co=256
+let g:indentLine_char = '│'
+let g:indentLine_enabled = 1
+let g:indentLine_faster = 1
+let g:indentLine_setColors = 1
 colorscheme gruvbox
-nnoremap <C-n> :NERDTreeToggle<CR>
+
+" Keymaps
+let mapleader=" "
+
+" NERDTree keymap
+nnoremap <leader>n :NERDTreeToggle<CR>
+
+" Better window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+
+" Resize splits with arrow keys
+nnoremap <C-Up>    :resize +2<CR>
+nnoremap <C-Down>  :resize -2<CR>
+nnoremap <C-Left>  :vertical resize -2<CR>
+nnoremap <C-Right> :vertical resize +2<CR>
+
+nnoremap <leader>ff :FZF<CR>
+
+" Terminal mode keymaps
+tnoremap <Esc> <C-\><C-n>
