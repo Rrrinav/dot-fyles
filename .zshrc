@@ -9,14 +9,22 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:$HOME/bin:"* ]]; then
 fi
 
 if [ -d ~/.zshrc.d ]; then
-    for rc in ~/.zshrc.d/*; do
-        if [ -f "$rc" ]; then
-            source "$rc"
-        fi
-    done
+  for rc in ~/.zshrc.d/*; do
+    if [ -f "$rc" ]; then
+      source "$rc"
+    fi
+  done
 fi
 unset rc
 
+# Function to override rm -rf ~/
+rm() {
+  if [[ "$*" == *"-rf ~"* || "$*" == *"-rf $HOME"* ]]; then
+    echo "Error: Attempt to remove home directory blocked."
+    return 1
+  fi
+  command rm "$@"
+}
 
 (cat ~/.cache/wal/sequences &)
 export PATH="${PATH}:${HOME}/.local/bin/"
@@ -148,10 +156,12 @@ source $ZSH/oh-my-zsh.sh
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 function yazi-cd() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
+local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+yazi "$@" --cwd-file="$tmp"
+if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+  cd -- "$cwd"
+fi
+rm -f -- "$tmp"
 }
+
+export PATH=$PATH:/home/rinav/.spicetify

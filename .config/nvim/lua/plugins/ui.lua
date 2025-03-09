@@ -9,8 +9,8 @@ return {
     "xiyaowong/transparent.nvim",
     opts = {
       extra_groups = {
-        "NormalFloat",            -- plugins which have float panel such as Lazy, Mason, LspInfo
-        "NvimTreeNormal",         -- NvimTree
+        "NormalFloat",    -- plugins which have float panel such as Lazy, Mason, LspInfo
+        "NvimTreeNormal", -- NvimTree
       },
     },
   },
@@ -20,7 +20,8 @@ return {
       preset = "helix",
       spec = {
         { "<leader>t", group = "Telescope plugins" },
-        { "<leader>m", group = "Mini surroundings", icon = '' },
+        { "<leader>m", group = "Mini Plugins", icon = '󱀧 ' },
+        { "<leader>ma", group = "Mini Align", icon = '󱀧 ' },
         { "<leader>b", group = "Buffer management" },
         { "<leader>w", group = "Window management" },
         { "<leader>u", group = "UI" },
@@ -76,7 +77,7 @@ return {
       vim.o.laststatus = vim.g.lualine_laststatus
 
       local opts = {
-        globalstatus = true,         -- Force global statusline
+        globalstatus = true, -- Force global statusline
         options = {
           theme = "auto",
           globalstatus = true,
@@ -104,14 +105,14 @@ return {
               padding = { left = 1, right = 0 },
             },
             {
-              trimmed_path,               -- Show relative path from CWD
+              trimmed_path, -- Show relative path from CWD
             },
           },
           lualine_x = {
             {
               require("lazy.status").updates,
               cond = require("lazy.status").has_updates,
-              color = function() return { fg = "#fab387" } end,               -- Set a custom color
+              color = function() return { fg = "#fab387" } end, -- Set a custom color
             },
             {
               "diff",
@@ -193,6 +194,11 @@ return {
     config = function()
       vim.g.rose_pine_variant = "main"
     end,
+  },
+  {
+      "pmouraguedes/neodarcula.nvim",
+      lazy = false,
+      priority = 1000,
   },
   {
     "EdenEast/nightfox.nvim",
@@ -324,7 +330,7 @@ return {
                 hl = hl,
                 margin = ' ',
               }
-            end),             -- Spacer
+            end), -- Spacer
             line.spacer(),
             -- Windows in current tab section
             line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
@@ -342,8 +348,8 @@ return {
             -- Tail section
             {
               line.sep('', theme.tail, theme.fill),
-              get_buf_count(),
-              { ' ' },
+              { get_buf_count(), hl = theme.tail },
+              { ' ', hl = theme.tail },
               { ' ', hl = theme.tail },
             },
             hl = theme.fill,
@@ -371,6 +377,7 @@ return {
       local map_opts = { noremap = true }
       local mappings = {
         ["<leader><Tab>a"] = { cmd = ":$tabnew<CR>", desc = "New tab" },
+        ["<leader><Tab><Tab>"] = { cmd = ":$tabnew<CR>", desc = "New tab" },
         ["<leader><Tab>c"] = { cmd = ":tabclose<CR>", desc = "Close tab" },
         ["<leader><Tab>o"] = { cmd = ":tabonly<CR>", desc = "Close other tabs" },
         ["<leader><Tab>n"] = { cmd = ":tabn<CR>", desc = "Next tab" },
@@ -391,25 +398,25 @@ return {
     config = function()
       require('gitsigns').setup {
         signs = {
-          add = { text = " " },
-          change = { text = " " },
+          add = { text = "│" }, -- Thin vertical bar
+          change = { text = "│" }, -- Same as add for consistency
           delete = { text = "" },
           topdelete = { text = "" },
-          changedelete = { text = " " },
-          untracked = { text = " " },
+          changedelete = { text = "┆" },
+          untracked = { text = "┆" }, -- Dotted vertical bar
         },
         signs_staged = {
-          add = { text = " " },
-          change = { text = " " },
+          add = { text = "┃" }, -- Bold vertical bar
+          change = { text = "┃" },
           delete = { text = "" },
           topdelete = { text = "" },
-          changedelete = { text = " " },
+          changedelete = { text = "┃" },
         },
-        signs_staged_enable = true,         -- Enable staged signs
-        signcolumn = true,                  -- Toggle with `:Gitsigns toggle_signs`
-        numhl = false,                      -- Toggle with `:Gitsigns toggle_numhl`
-        linehl = false,                     -- Toggle with `:Gitsigns toggle_linehl`
-        word_diff = false,                  -- Toggle with `:Gitsigns toggle_word_diff`
+        signs_staged_enable = true, -- Enable staged signs
+        signcolumn = true,          -- Toggle with `:Gitsigns toggle_signs`
+        numhl = false,              -- Toggle with `:Gitsigns toggle_numhl`
+        linehl = false,             -- Toggle with `:Gitsigns toggle_linehl`
+        word_diff = false,          -- Toggle with `:Gitsigns toggle_word_diff`
         watch_gitdir = {
           follow_files = true
         }, on_attach = function(buffer)
@@ -437,10 +444,10 @@ return {
       end,
         auto_attach                  = true,
         attach_to_untracked          = false,
-        current_line_blame           = false,         -- Toggle with `:Gitsigns toggle_current_line_blame`
+        current_line_blame           = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
         current_line_blame_opts      = {
           virt_text = true,
-          virt_text_pos = 'eol',           -- 'eol' | 'overlay' | 'right_align'
+          virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
           delay = 1000,
           ignore_whitespace = false,
           virt_text_priority = 100,
@@ -449,8 +456,8 @@ return {
         current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
         sign_priority                = 6,
         update_debounce              = 100,
-        status_formatter             = nil,           -- Use default
-        max_file_length              = 40000,         -- Disable if file is longer than this (in lines)
+        status_formatter             = nil,   -- Use default
+        max_file_length              = 40000, -- Disable if file is longer than this (in lines)
         preview_config               = {
           -- Options passed to nvim_open_win
           border = 'single',
