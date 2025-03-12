@@ -38,18 +38,17 @@ fi
 
 # Extract the file extension and filename
 extension="${file##*.}"
-filename=$(basename "$file")
 
 # Convert the wallpaper to PNG if necessary
 if [[ "$extension" == "jpg" || "$extension" == "jpeg" ]]; then
   echo "Converting JPG to PNG"
-  magick convert "$file" "$CACHE_FILE"
+  magick "$file" "$CACHE_FILE"
 elif [[ "$extension" == "gif" ]]; then
   echo "Extracting representative frame from GIF"
   ffmpeg -i "$file" -vf "select='gte(n\,1)',scale=1920:-1:flags=lanczos" -frames:v 1 "$CACHE_FILE" -y >/dev/null
 else
   echo "Copying file directly as PNG"
-  magick convert "$file" "$CACHE_FILE"
+  magick "$file" "$CACHE_FILE"   # Change here: magick convert → magick
 fi
 
 # Setting color scheme with pywal
@@ -81,3 +80,5 @@ echo "Changing wallpaper with swww"
 swww img --transition-type any --transition-fps 165 --transition-pos top-right "$file" >/dev/null
 
 notify-send "Wallpaper changed" "New wallpaper and colors applied!" -a 'System'
+
+

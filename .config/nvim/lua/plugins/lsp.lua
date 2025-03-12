@@ -38,11 +38,11 @@ return {
         "folke/lazydev.nvim",
         ft = "lua", -- only load on lua files
         opts = {
-          -- library = {
-          --   -- See the configuration section for more details
-          --   -- Load luvit types when the `vim.uv` word is found
-          --   { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-          -- },
+          library = {
+            -- See the configuration section for more details
+            -- Load luvit types when the `vim.uv` word is found
+            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          },
         },
       },
     },
@@ -205,58 +205,23 @@ return {
             },
           }))
         end,
+        ["pylsp"] = function()
+          lspconfig.pyright.setup(vim.tbl_extend("force", default_config, {
+            settings = {
+              pylsp = {
+                plugins = {
+                  jedi_completion = {
+                    include_params = true,
+                  },
+                  pycodestyle = { enabled = false },
+                },
+              },
+            },
+          }))
+        end,
       })
     end,
   },
-  -- {
-  --   "stevearc/conform.nvim",
-  --   event = { "BufWritePre" },
-  --   cmd = { "ConformInfo" },
-  --   opts = {
-  --     -- Set up formatters per filetype
-  --     formatters_by_ft = {
-  --       -- Prefer prettier for frontend files
-  --       -- javascript = { "prettier" },
-  --       -- typescript = { "prettier" },
-  --       -- javascriptreact = { "prettier" },
-  --       -- typescriptreact = { "prettier" },
-  --       -- css = { "prettier" },
-  --       -- html = { "prettier" },
-  --       -- json = { "prettier" },
-  --       -- yaml = { "prettier" },
-  --       -- markdown = { "prettier" },
-  --       -- -- Python formatters
-  --       -- python = { "isort", "black" },
-  --       -- -- Formatting rust
-  --       -- rust = { "rustfmt" },
-  --       -- -- Shell script formatting
-  --       -- sh = { "shfmt" },
-  --       c = { "clang-format" },
-  --       cpp = { "clang-format" },
-  --     },
-  --     -- Customize formatters
-  --     formatters = {
-  --       prettier = {
-  --         -- You can add custom prettier config here
-  --         prepend_args = { "--tab-width", "2" },
-  --       },
-  --       black = {
-  --         prepend_args = { "--line-length", "150" },
-  --       },
-  --       shfmt = {
-  --         prepend_args = { "-i", "2" },
-  --       },
-  --     },
-  --     -- Format on save settings
-  --     format_on_save = {
-  --       enabled = false,
-  --       timemut_ms = 500,
-  --       lsp_fallback = true,
-  --     },
-  --     -- Notify on formatting errors
-  --     notify_on_error = true,
-  --   },
-  -- },
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins

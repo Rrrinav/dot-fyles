@@ -190,12 +190,6 @@ return {
     end,
   },
   {
-    "rose-pine/neovim",
-    config = function()
-      vim.g.rose_pine_variant = "main"
-    end,
-  },
-  {
       "pmouraguedes/neodarcula.nvim",
       lazy = false,
       priority = 1000,
@@ -218,7 +212,31 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      require("nord").setup({})
+      require("nord").setup({
+        transparent = false, -- Enable this to disable setting the background color
+        terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+        diff = { mode = "bg" }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
+        borders = true, -- Enable the border between verticaly split windows visible
+        errors = { mode = "bg" }, -- Display mode for errors and diagnostics
+        -- values : [bg|fg|none]
+        search = { theme = "vim" }, -- theme for highlighting search results
+        -- values : [vim|vscode]
+        styles = {
+          comments = { italic = true },
+          keywords = { bold = true },
+          functions = { bold = true },
+          variables = {},
+        },
+
+        -- Override the default colors
+        ---@param colors Nord.Palette
+        on_colors = function(colors) end,
+
+        --- You can override specific highlights to use other groups or a hex color
+        --- function will be called with all highlights and the colorScheme table
+        ---@param colors Nord.Palette
+        on_highlights = function(highlights, colors) end,
+      })
     end,
   },
   {

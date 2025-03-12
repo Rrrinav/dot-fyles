@@ -1,8 +1,8 @@
 require("config.lazy")
 
-vim.cmd.colorscheme("neodarcula") -- Or any other theme
+vim.cmd.colorscheme("nord") -- Or any other theme
 require("config.essential_highlights")
--- require("config.highlights")
+require("config.highlights").setup()
 require("config.keymaps")
 require("config.autocmds")
 require("config.basic_gui").setup()

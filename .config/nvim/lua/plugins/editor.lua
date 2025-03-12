@@ -74,6 +74,24 @@ return {
         desc = "Lists files in your current working directory, respects .gitignore",
       },
       {
+        "<leader>tw",
+        function()
+          local builtin = require("telescope.builtin")
+          local word = vim.fn.expand("<cword>")
+          builtin.grep_string(require("telescope.themes").get_ivy({ search = word }))
+        end,
+        desc = "Lists files in your current working directory, respects .gitignore",
+      },
+      {
+        "<leader>tW",
+        function()
+          local builtin = require("telescope.builtin")
+          local word = vim.fn.expand("<cWORD>")
+          builtin.grep_string(require("telescope.themes").get_ivy({ search = word }))
+        end,
+        desc = "Lists files in your current working directory, respects .gitignore",
+      },
+      {
         "<leader>th",
         function()
           local builtin = require("telescope.builtin")
