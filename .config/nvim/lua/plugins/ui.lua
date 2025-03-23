@@ -19,20 +19,20 @@ return {
     opts = {
       preset = "helix",
       spec = {
-        { "<leader>t", group = "Telescope plugins" },
-        { "<leader>m", group = "Mini Plugins", icon = '󱀧 ' },
-        { "<leader>ma", group = "Mini Align", icon = '󱀧 ' },
-        { "<leader>b", group = "Buffer management" },
-        { "<leader>w", group = "Window management" },
-        { "<leader>u", group = "UI" },
-        { "<leader>c", group = "Code" },
-        { "<leader>g", group = "Git" },
-        { "gb", group = "Lsp go tos but in different buffer", icon = "󰩗" },
-        { "<leader>x", group = "Diagnotics", icon = "" },
-        { "<leader>q", group = "Quickfix List & Session Management" },
-        { "<leader><Tab>", group = "Tabs (key = tab)" },
+        { "<leader>t",      group = "Telescope plugins" },
+        { "<leader>m",      group = "Mini Plugins", icon = '󱀧 ' },
+        { "<leader>ms",     group = "Mini Surround", icon = '󱀧 ' },
+        { "<leader>b",      group = "Buffer management" },
+        { "<leader>w",      group = "Window management" },
+        { "<leader>u",      group = "UI" },
+        { "<leader>c",      group = "Code" },
+        { "<leader>g",      group = "Git" },
+        { "gb",             group = "Lsp go tos but in different buffer", icon = "󰩗" },
+        { "<leader>x",      group = "Diagnotics", icon = "" },
+        { "<leader>q",      group = "Quickfix List & Session Management" },
+        { "<leader><Tab>",  group = "Tabs (key = tab)" },
         { "<leader><Tab>m", group = "Move tab" },
-        { "<leader>f", group = "Terminal / file" }
+        { "<leader>f",      group = "Terminal / file" }
       },
     },
   },
@@ -208,6 +208,29 @@ return {
     }
   },
   {
+    "RedsXDD/neopywal.nvim",
+    name = "neopywal",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent_background = false,
+      styles = {
+        comments = { "italic" },
+        conditionals = { "italic" },
+        loops = {},
+        functions = {},
+        keywords = {},
+        includes = { "italic" },
+        strings = {"italic"},
+        variables = { "italic" },
+        numbers = {},
+        booleans = {},
+        types = { "italic" },
+        operators = {},
+      },
+    },
+  },
+  {
     "gbprod/nord.nvim",
     lazy = false,
     priority = 1000,
@@ -223,8 +246,8 @@ return {
         -- values : [vim|vscode]
         styles = {
           comments = { italic = true },
-          keywords = { bold = true },
-          functions = { bold = true },
+          keywords = { italic = true, bold = true },
+          functions = { italic = true },
           variables = {},
         },
 

@@ -77,20 +77,6 @@ return
         ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
       },
       cmdline = {
-        keymap = {
-          preset = 'none',
-          ['<C-p>'] = { 'select_prev', 'fallback' },
-          ['<C-n>'] = { 'select_next', 'fallback' },
-          ['<C-y>'] = { 'accept', 'fallback' },
-          ['<Right>'] = { 'snippet_backward', 'fallback' },
-        },
-        sources = {
-          [':'] = { 'cmdline', 'path' }, -- For Vim commands
-          ['?'] = { 'buffer' },          -- For search backward
-          ['/'] = { 'buffer' },          -- For search forward
-          ['@'] = { 'buffer', 'cmdline' }, -- For registers
-          ['='] = { 'cmdline' },         -- For expressions
-        }
       }
     },
   },
@@ -210,7 +196,7 @@ return
       vim.g.compile_mode = {
         -- to add ANSI escape code support, add:
         baleia_setup = true,
-        -- debug = true,
+        debug = true,
       }
       require("compile-mode.config.internal").default_command = ""
     end,

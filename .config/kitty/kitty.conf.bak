@@ -4,7 +4,7 @@ include ~/.cache/wal/colors-kitty.conf
 # Theme
 # foreground #fafafa
 # background #1f1f1f
-font_size 13.0
+font_size 14.0
 # Cursor
 shell_integration no-cursor
 # cursor #cc9900
@@ -22,8 +22,8 @@ url_color #0087bd
 url_style curly
 
 # BEGIN_KITTY_FONTS
-font_family      family='JetBrainsMonoNL Nerd Font' style=Light
+font_family      family='JetBrainsMonoNL Nerd Font' postscript_name=JetBrainsMonoNLNF-Light
 bold_font        family='JetBrainsMonoNL Nerd Font' postscript_name=JetBrainsMonoNLNF-SemiBold
-italic_font      family='JetBrainsMonoNL Nerd Font' postscript_name=JetBrainsMonoNLNF-MediumItalic
+italic_font      family='JetBrainsMonoNL Nerd Font' style='Light Italic'
 bold_italic_font auto
 # END_KITTY_FONTS

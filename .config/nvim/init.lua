@@ -10,8 +10,13 @@ require("config.user_commands").setup()
 require("config.swap_words").setup()
 require("config.floating-term")
 
+Snacks.notify("Hello Rinav  ");
+
 vim.opt.termguicolors = true
 vim.keymap.del("", "<Tab>")
+
+-- require('transparent').clear_prefix('Telescope')
+-- require('transparent').clear_prefix('WhichKey')
 
 vim.api.nvim_set_hl(0, "TabLineFill", { link ="Normal" })
 vim.api.nvim_set_hl(0, "TabLine"    , { link = "Normal" })

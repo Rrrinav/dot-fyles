@@ -68,7 +68,6 @@ end, { desc = "Format selection with LSP" })
 
 vim.keymap.set("n", "<A-t>", "<leader>Cw<leader>R", { noremap = true, silent = true, desc = "Swap words" })
 
-
 vim.keymap.set("n", "<leader>fe",
     function()
         Snacks.explorer();

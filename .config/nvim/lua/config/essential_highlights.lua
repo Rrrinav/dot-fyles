@@ -1,3 +1,5 @@
+vim.opt.termguicolors = true
+
 local function get_hl_color(hl_group, attr)
   -- Get the highlight group definition (using 0 for global)
   local hl = vim.api.nvim_get_hl(0, { name = hl_group })
@@ -5,20 +7,18 @@ local function get_hl_color(hl_group, attr)
   return hl[attr]
 end
 
-local Operator_fg   = get_hl_color("Operator", "fg")
-local float_b_bg    = get_hl_color("NormalFloat", 'bg')
-local statusline_fg = get_hl_color("StatusLine", "fg")
-local cursorline_bg = get_hl_color("CursorLine", "bg")
-local keyword_fg    = get_hl_color("Constant", "fg")
-local Operator_fg   = get_hl_color("Operator", "fg")
+local Operator_fg     = get_hl_color("Operator", "fg")
+local float_b_bg      = get_hl_color("NormalFloat", 'bg')
+local statusline_fg   = get_hl_color("StatusLine", "fg")
+local cursorline_bg   = get_hl_color("CursorLine", "bg")
+local keyword_fg      = get_hl_color("Constant", "fg")
+local Operator_fg     = get_hl_color("Operator", "fg")
 local TelescopeNormal = get_hl_color("TelescopeNormal", "bg")
-local str_fg = get_hl_color("@string", "fg")
-local b_str_fg = get_hl_color("String", "fg")
-
-require('transparent').clear_prefix('Telescope')
+local str_fg          = get_hl_color("@string", "fg")
+local b_str_fg        = get_hl_color("String", "fg")
 
 vim.api.nvim_set_hl(0, "@string",       { fg = str_fg, italic = true })
-vim.api.nvim_set_hl(0, "String",       { fg = b_str_fg, italic = true })
+vim.api.nvim_set_hl(0, "String",        { fg = b_str_fg, italic = true })
 
 vim.api.nvim_set_hl(0, "BlinkCmpKind",       { ctermfg = 14, fg= Operator_fg })
 -- Define compile-mode highlights
@@ -42,8 +42,8 @@ vim.api.nvim_set_hl(0, "NormalPopupNC",           { bg = float_b_bg })
 vim.api.nvim_set_hl(0, "FloatShadow",             { bg = float_b_bg })
 vim.api.nvim_set_hl(0, "FloatShadowThrough",      { bg = float_b_bg })
 vim.api.nvim_set_hl(0, "TelescopeBorder",         { bg = TelescopeNormal })
-vim.api.nvim_set_hl(0, "TelescopeSelection",      { link = "CursorLine" })
-vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { link = "CursorLine" })
+vim.api.nvim_set_hl(0, "TelescopeSelection",      { fg = keyword_fg , bg = cursorline_bg, bold = true })
+vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { fg = keyword_fg, bg = cursorline_bg })
 vim.api.nvim_set_hl(0, "TelescopeMultiSelection", { link = "Visual" })
 vim.api.nvim_set_hl(0, "TelescopeMatching",       { link = "Search" })
 vim.api.nvim_set_hl(0, "TelescopePromptPrefix",   { link = "Normal" })

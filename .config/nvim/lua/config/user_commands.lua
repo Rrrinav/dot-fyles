@@ -105,6 +105,17 @@ function M.setup()
       end)
   end, {})
 
+  -- Change the current working directory to the directory of the current buffer
+  vim.api.nvim_create_user_command('CDHere', function()
+    local dir = vim.fn.expand('%:p:h')
+    if dir ~= '' then
+      vim.cmd('cd ' .. dir)
+      print('Changed directory to: ' .. dir)
+    else
+      print('No file path detected.')
+    end
+  end, {})
+
 end
 
 return M
