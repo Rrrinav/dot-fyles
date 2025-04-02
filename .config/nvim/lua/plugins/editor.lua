@@ -263,35 +263,26 @@ return {
     },
 
     -- Optional dependencies
-    --dependencies = { { "echasnovski/mini.icons", opts = {} } },
+   -- dependencies = {  },
     dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
   },
+  { "echasnovski/mini.icons", opts = {} },
+  { "nvim-treesitter/nvim-treesitter-textobjects" },
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
     opts = {
       -- A list of parser names, or "all" (supported parsers)
       ensure_installed = {
-        "bash", "c", "html", "javascript", "json", "lua", "markdown", "python", "regex", "rust", "tsx",
+        "bash", "c", "html", "javascript", "json", "lua", "markdown", "python", "rust", "tsx",
         "typescript",
-        "vim", "yaml",
+        "vim",
       },
-
-      -- Install parsers synchronously (only applied to `ensure_installed`)
       sync_install = false,
-
-      -- Automatically install missing parsers when entering buffer
       auto_install = true,
-
       highlight = {
-        -- Enable syntax highlighting
         enable = true,
-
-        -- Disable slow treesitter highlight for large files
         disable = function(lang, buf)
           local max_filesize = 100 * 1024 -- 100 KB
           local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -300,16 +291,12 @@ return {
           end
         end,
 
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
         additional_vim_regex_highlighting = false,
       },
-
       indent = { enable = true },
-
       fold = {
         enable = true,
       },
-
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -320,36 +307,6 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-
-      local ts_selection = require("nvim-treesitter.incremental_selection")
-
-      -- Keymaps with descriptions
-      vim.keymap.set("n", "gnn", ts_selection.init_selection, {
-        noremap = true,
-        silent = true,
-        desc = "[TS] Start incremental selection (selects the node under cursor)",
-      })
-
-      vim.keymap.set("n", "gnr", ts_selection.node_incremental, {
-        noremap = true,
-        silent = true,
-        desc = "[TS] Expand selection to the next larger node",
-      })
-
-      vim.keymap.set("n", "gnc", ts_selection.scope_incremental, {
-        noremap = true,
-        silent = true,
-        desc = "[TS] Expand selection to the next larger syntax scope (e.g., function, loop, etc.)",
-      })
-
-      vim.keymap.set("n", "gnm", ts_selection.node_decremental, {
-        noremap = true,
-        silent = true,
-        desc = "[TS] Shrink selection to the previous smaller node",
-      })
-    end,
   },
   {
     "folke/trouble.nvim",
@@ -450,7 +407,6 @@ return {
     },
     -- See Commands section for default commands if you want to lazy load on them
   },
-  { "AndreM222/copilot-lualine" },
   {
     'anuvyklack/hydra.nvim',
     config = function()

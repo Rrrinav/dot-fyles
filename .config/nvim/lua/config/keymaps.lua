@@ -149,8 +149,6 @@ vim.keymap.set("n", "<leader>bo", function()
         end
     end
 end, { desc = "Close other buffers" })
-vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bx", function()
     if #vim.fn.getbufinfo({ buflisted = 1 }) > 1 then
         vim.cmd("bd")

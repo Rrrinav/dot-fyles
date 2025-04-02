@@ -28,7 +28,7 @@ local function get_window_config()
 end
 
 function M.open_float_term(cmd, cwd)
-  cmd = cmd or 'bash'
+  cmd = cmd or os.getenv("SHELL") or vim.o.shell
 
   -- Create empty buffer
   local buf = vim.api.nvim_create_buf(false, true)
@@ -76,12 +76,12 @@ end
 
 -- Create user commands
 vim.api.nvim_create_user_command('Fterm', function(opts)
-  local cmd = opts.args ~= "" and opts.args or "bash"
+  local cmd = opts.args ~= "" and opts.args or os.getenv("SHELL") or vim.o.shell
   M.open_float_term(cmd)
 end, { nargs = '?' })
 
 vim.api.nvim_create_user_command('Ftermdir', function(opts)
-  local cmd = opts.args ~= "" and opts.args or "bash"
+  local cmd = opts.args ~= "" and opts.args or os.getenv("SHELL") or vim.o.shell
   local cwd = vim.fn.expand("%:p:h")
   M.open_float_term(cmd, cwd)
 end, { nargs = '?' })

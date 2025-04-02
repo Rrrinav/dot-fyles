@@ -84,12 +84,12 @@ return
     'echasnovski/mini.align',
     version = '*',
     opts = {
-        mappings = {
-          start = 'ma',
-          start_with_preview = 'mA',
-        },
+      mappings = {
+        start = 'ma',
+        start_with_preview = 'mA',
+      },
 
-        -- Modifiers changing alignment steps and/or options
+      -- Modifiers changing alignment steps and/or options
       --   modifiers = {
       --     -- Main option modifiers
       --     ['s'] = --<function: enter split pattern>,
@@ -196,7 +196,7 @@ return
       vim.g.compile_mode = {
         -- to add ANSI escape code support, add:
         baleia_setup = true,
-        debug = true,
+        --debug = true,
       }
       require("compile-mode.config.internal").default_command = ""
     end,

@@ -1,6 +1,7 @@
 require("config.lazy")
 
-vim.cmd.colorscheme("nord") -- Or any other theme
+-- vim.cmd.colorscheme("neopywal") -- Or any other theme
+vim.cmd.colorscheme("onedark")
 require("config.essential_highlights")
 require("config.highlights").setup()
 require("config.keymaps")
@@ -17,9 +18,5 @@ vim.keymap.del("", "<Tab>")
 
 -- require('transparent').clear_prefix('Telescope')
 -- require('transparent').clear_prefix('WhichKey')
-
-vim.api.nvim_set_hl(0, "TabLineFill", { link ="Normal" })
+vim.api.nvim_set_hl(0, "TabLineFill", { link = "Normal" })
 vim.api.nvim_set_hl(0, "TabLine"    , { link = "Normal" })
-vim.cmd([[
-  cnoreabbrev <expr> lua getcmdtype() == ':' && getcmdline() == 'lua' ? '󰢱 ' : 'lua'
-]])

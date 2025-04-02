@@ -48,27 +48,16 @@ return {
     },
     config = function()
       local signs = {
-        Error = "",
-        Warn = "",
-        Hint = "",
-        Info = "",
+        Error = " ",
+        Warn = " ",
+        Hint = " ",
+        Info = " ",
       }
       for type, icon in pairs(signs) do
         local hl = "DiagnosticSign" .. type
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
       end
-
-      -- Configure diagnostic display
-      vim.diagnostic.config({
-        signs = true,
-        update_in_insert = false,
-        underline = true,
-        severity_sort = true,
-        virtual_text = {
-          prefix = " ■", -- Could be '■', '▎', 'x'
-          source = "if_many",
-        },
-      })
+      -- vim.diagnostic.config({virtual_text = false})
       local lspconfig = require("lspconfig")
       -- LSP keybindings
       local function with_desc(description, bufnr)
@@ -93,16 +82,8 @@ return {
           vim.lsp.buf.definition()
           if #vim.fn.getqflist() == 1 then vim.cmd('cc 1') end
         end, with_desc("Go to definition", bufnr))                                                               -- Go to definition
-        vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", with_desc("Go to references", bufnr)) -- Go to references
-        vim.keymap.set(
-          "n",
-          "gI",
-          "<cmd>lua vim.lsp.buf.implementation()<CR>",
-          with_desc("Go to implementation", bufnr)
-        )                                                                                                  -- Go to implementation
-        vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", with_desc("Hover", bufnr))            -- Hover
-        vim.keymap.set("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<CR>", with_desc("Rename", bufnr)) -- Rename
 
+        vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", with_desc("Hover", bufnr))            -- Hover
         -- Diagnostics
         vim.keymap.set(
           "n",
@@ -223,11 +204,38 @@ return {
     end,
   },
   {
-    'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-    ---@module 'render-markdown'
-    ---@type render.md.UserConfig
-    opts = {},
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      code = {
+        sign = false,
+        width = "block",
+        right_pad = 1,
+      },
+      heading = {
+        sign = false,
+        icons = {},
+      },
+      checkbox = {
+        enabled = true,
+      },
+    },
+    ft = { "markdown", "norg", "rmd", "org", "codecompanion" },
+    config = function(_, opts)
+      require("render-markdown").setup(opts)
+      Snacks.toggle({
+        name = "Render Markdown",
+        get = function()
+          return require("render-markdown.state").enabled
+        end,
+        set = function(enabled)
+          local m = require("render-markdown")
+          if enabled then
+            m.enable()
+          else
+            m.disable()
+          end
+        end,
+      }):map("<leader>um")
+    end,
   }
 }

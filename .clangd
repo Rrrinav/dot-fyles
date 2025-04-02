@@ -1,0 +1,15 @@
+If:
+  PathMatch: [.*\.cpp, .*\.hpp]
+CompileFlags:
+  Add:
+    - "-std=c++26"
+
+---
+
+# Use the latest C standard for C files
+If:
+  PathMatch: [.*\.c, .*\.h]
+CompileFlags:
+  Add:
+    - "-std=c2x"
+

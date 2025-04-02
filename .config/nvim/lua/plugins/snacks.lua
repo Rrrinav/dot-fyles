@@ -12,25 +12,25 @@ return {
         enabled = true
       },
       statuscolumn = {
-        enabled = true,
-        right = { "mark", "sign" },         -- priority of signs on the left (high to low)
-        left = { "fold", "git" },         -- priority of signs on the right (high to low)
+        enabled = false,
+        right = { "mark", "sign" },  -- priority of signs on the left (high to low)
+        left = { "fold", "git" },    -- priority of signs on the right (high to low)
         folds = {
-          open = false,                    -- show open fold icons
-          git_hl = false,                  -- use Git Signs hl for fold icons
+          open = false,              -- show open fold icons
+          git_hl = false,            -- use Git Signs hl for fold icons
         },
         git = {
           -- patterns to match Git signs
           patterns = { "GitSign", "MiniDiffSign" },
         },
-        refresh = 50,         -- refresh at most every 50ms
+        refresh = 50,  -- refresh at most every 50ms
       },
       scroll = {
         animate = {
           duration = { step = 15, total = 250 },
           easing = "linear",
         },
-        spamming = 10,         -- threshold for spamming detection
+        spamming = 10,  -- threshold for spamming detection
         -- what buffers to animate
         filter = function(buf)
           return vim.g.snacks_scroll ~= false and vim.b[buf].snacks_scroll ~= false and
@@ -59,7 +59,7 @@ return {
           {
             pane = 2,
             height = 30,
-            padding = 7,
+            padding = 9,
           },
           { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
           { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
@@ -89,12 +89,21 @@ return {
             { icon = " ", key = "q", desc = "Quit", action = ":qa" },
           },
           header = [[
-███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
-████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
-██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
-██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
-██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣄⣄⠀⠀⠀⢠⣾⣿⣾⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠋⠀⠀⢠⣍⡙⣿⣟⡃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢤⣴⣿⠀⢻⣼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⣋⢠⣸⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠰⢿⡄⠉⢭⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣈⡻⡿⣿⣿⣿⣶⣿⣶⣄⣀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡔⠁⠀⠀⠈⡿⠋⠁⢠⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀
+⠀⠀⠀⠀⠀⠀⢠⣶⣿⣿⠀⠀⠀⠀⠀⠀⣠⣴⣿⣿⣿⣿⣿⣿⣿⣻⣿⣿⣿⣿⣦⡀]]
+          --           header = [[
+          -- ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+          -- ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+          -- ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+          -- ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+          -- ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+          -- ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
         },
       },
       notifier = {
@@ -109,7 +118,7 @@ return {
         },
         dashboard = {
           wo = {
-            number = false,             -- This ensures no line numbers
+            number = false,  -- This ensures no line numbers
             relativenumber = false,
           }
         },
@@ -189,22 +198,6 @@ return {
         desc = "which_key_ignore",
       },
       {
-        "]]",
-        function()
-          Snacks.words.jump(vim.v.count1)
-        end,
-        desc = "Next Reference",
-        mode = { "n", "t" },
-      },
-      {
-        "[[",
-        function()
-          Snacks.words.jump(-vim.v.count1)
-        end,
-        desc = "Prev Reference",
-        mode = { "n", "t" },
-      },
-      {
         "<leader>N",
         desc = "Neovim News",
         function()
@@ -234,7 +227,7 @@ return {
           _G.bt = function()
             Snacks.debug.backtrace()
           end
-          vim.print = _G.dd           -- Override print to use snacks for `:=` command
+          vim.print = _G.dd  -- Override print to use snacks for `:=` command
 
           -- Create some toggle mappings
           Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")

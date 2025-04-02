@@ -39,7 +39,7 @@
 #$username\
 # [  ](fg:#fafafa bold)\
 format = """
-[\\[](fg:#fafafa bold)[ ](bold blue fg:#fafafa)\
+[\\[ rinav ](fg:#fafafa bold)[ ](bold blue fg:#fafafa)\
 $time\
 [ \\]](bold blue fg:#fafafa)\
 $directory\

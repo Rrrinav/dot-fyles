@@ -76,3 +76,32 @@ vim.api.nvim_create_autocmd('CmdwinEnter', {
     vim.keymap.set({ 'n', 'i' }, '<S-Cr>', '<cr>q:', { buffer = args.buf })
   end,
 })
+
+-- If anyone needs their own completion
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--   callback = function(ev)
+--     local client = vim.lsp.get_client_by_id(ev.data.client_id)
+--     if client and client:supports_method("textDocument/completion") then
+--       vim.lsp.completion.enable(true, client.id, ev.buf, {autotrigger = true})
+--     end
+--   end
+-- })
+
+vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
+  pattern = "*",
+  callback = function()
+    vim.wo.winbar = ""
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.foldcolumn = "0"
+    vim.opt_local.signcolumn = "no"
+    vim.opt_local.cursorcolumn = false
+    vim.opt_local.wrap = false
+    vim.opt_local.scrolloff = 0
+    vim.opt_local.sidescrolloff = 0
+    vim.opt_local.buflisted = false
+    vim.opt_local.cursorline = false
+    vim.opt_local.colorcolumn = ""
+    vim.opt_local.statuscolumn = ""
+  end,
+})

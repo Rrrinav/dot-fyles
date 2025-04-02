@@ -1,4 +1,9 @@
 local icons = {
+  copilot = {
+    copilot = " ",
+    off = " ",
+    loading = " "
+  },
   separators = {
     left          = "", -- Thick left
     right         = "", -- Thick right
@@ -31,7 +36,7 @@ local icons = {
     non_selected = " ",
     circle = "○",
     check = "✔",
-    cross = "✘",
+    cross = "✘ ",
     flame = "",
     star = "★",
   },

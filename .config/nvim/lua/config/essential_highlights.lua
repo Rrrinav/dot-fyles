@@ -16,6 +16,9 @@ local Operator_fg     = get_hl_color("Operator", "fg")
 local TelescopeNormal = get_hl_color("TelescopeNormal", "bg")
 local str_fg          = get_hl_color("@string", "fg")
 local b_str_fg        = get_hl_color("String", "fg")
+local string_nord = "#88a8c8";
+b_str_fg = string_nord
+str_fg = string_nord
 
 vim.api.nvim_set_hl(0, "@string",       { fg = str_fg, italic = true })
 vim.api.nvim_set_hl(0, "String",        { fg = b_str_fg, italic = true })
@@ -47,4 +50,3 @@ vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", { fg = keyword_fg, bg = cursor
 vim.api.nvim_set_hl(0, "TelescopeMultiSelection", { link = "Visual" })
 vim.api.nvim_set_hl(0, "TelescopeMatching",       { link = "Search" })
 vim.api.nvim_set_hl(0, "TelescopePromptPrefix",   { link = "Normal" })
-vim.api.nvim_set_hl(0, "CursorLineNr",            { fg = keyword_fg , bg = cursorline_bg, bold = true })

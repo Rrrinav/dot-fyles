@@ -1,3 +1,4 @@
+local copilot = require "copilot.api"
 return {
   {
     "j-hui/fidget.nvim",
@@ -51,6 +52,39 @@ return {
       vim.g.lualine_laststatus = vim.o.laststatus
     end,
     opts = function()
+      local function copilot_status()
+        local ok, api = pcall(require, "copilot.api")
+        if not ok or not api.status then return " " end -- Copilot logo (Off)
+
+        local status = api.status.data
+        if status == nil then return "󰦕 " end -- Spinner (Loading)
+        if status.status == "InProgress" then return "󱥸 " end -- Dots (Thinking)
+        if status.status == "Idle" then return " " end -- Copilot logo (Idle)
+        if status.status == "Normal" then return " " end -- Active (Magic wand)
+        return " " -- Default (Failsafe)
+      end
+
+      local function copilot_color()
+        local colors = {
+          ["Idle"]       = { fg = "#7aa2f7" },  -- Blue (Idle)
+          ["InProgress"] = { fg = "#e0af68" },  -- Yellow (Thinking)
+          ["Normal"]     = { fg = "#9ece6a" },  -- Green (Active)
+          [""]           = { fg = "#565f89" }   -- Grey (Unknown/Off)
+        }
+
+        local ok, api = pcall(require, "copilot.api")
+        local status = ok and api.status.data and api.status.data.status or ""
+        return colors[status] or colors[""]
+      end
+
+      require("lualine").setup({
+        sections = {
+          lualine_x = {
+            { copilot_status, color = copilot_color },
+            "encoding", "fileformat", "filetype"
+          },
+        }
+      })
       -- Define icons manually
       local icons = {
         diagnostics = {
@@ -154,9 +188,9 @@ return {
               end,
               icon = "",
             },
-            { "progress", separator = " ",                  padding = { left = 1, right = 0 } },
+            { "progress", separator = " ", padding = { left = 1, right = 0 } },
             { "location", padding = { left = 0, right = 1 } },
-            { "copilot" },
+            { copilot_status },
           },
           lualine_z = {
             function()
@@ -208,29 +242,6 @@ return {
     }
   },
   {
-    "RedsXDD/neopywal.nvim",
-    name = "neopywal",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      transparent_background = false,
-      styles = {
-        comments = { "italic" },
-        conditionals = { "italic" },
-        loops = {},
-        functions = {},
-        keywords = {},
-        includes = { "italic" },
-        strings = {"italic"},
-        variables = { "italic" },
-        numbers = {},
-        booleans = {},
-        types = { "italic" },
-        operators = {},
-      },
-    },
-  },
-  {
     "gbprod/nord.nvim",
     lazy = false,
     priority = 1000,
@@ -246,8 +257,8 @@ return {
         -- values : [vim|vscode]
         styles = {
           comments = { italic = true },
-          keywords = { italic = true, bold = true },
-          functions = { italic = true },
+          keywords = { italic = true },
+          functions = {  },
           variables = {},
         },
 
@@ -284,7 +295,7 @@ return {
       },
       code_style = {
         comments = 'italic',
-        keywords = 'italic',
+        keywords = 'bold',
         functions = 'none',
         strings = 'italic',
         variables = 'none'

@@ -22,8 +22,8 @@ url_color #0087bd
 url_style curly
 
 # BEGIN_KITTY_FONTS
-font_family      family='JetBrainsMonoNL Nerd Font' postscript_name=JetBrainsMonoNLNF-Light
-bold_font        family='JetBrainsMonoNL Nerd Font' postscript_name=JetBrainsMonoNLNF-SemiBold
-italic_font      family='JetBrainsMonoNL Nerd Font' style='Light Italic'
-bold_italic_font auto
+font_family      family='Lilex Nerd Font Mono' style=ExtraLight
+bold_font        family='Lilex Nerd Font Mono' style=Regular
+italic_font      family='Lilex Nerd Font Mono' style=ExtraLight features='+ss03 +zero +ss02'
+bold_italic_font family='Lilex Nerd Font Mono' style=Regular
 # END_KITTY_FONTS
