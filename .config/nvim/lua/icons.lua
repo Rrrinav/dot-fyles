@@ -4,6 +4,12 @@ local icons = {
     off = " ",
     loading = " "
   },
+  diagnostics = {
+    Error = " ",
+    Warn = " ",
+    Hint = " ",
+    Info = " ",
+  },
   separators = {
     left          = "", -- Thick left
     right         = "", -- Thick right

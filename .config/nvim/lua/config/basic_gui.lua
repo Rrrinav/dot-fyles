@@ -41,7 +41,7 @@ function M.setup()
 
 
   vim.opt.winblend    = 10 -- Adjust the transparency level (0-100)
-  vim.opt.numberwidth = 5
+  vim.opt.numberwidth = 6
 
   vim.filetype.add({
     pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
@@ -91,12 +91,12 @@ function M.setup()
 
 
   -- Window management
-  vim.o.splitbelow      = true -- Split windows below
-  vim.o.splitright      = true -- Split windows right
-  vim.opt.scrolloff     = 8    -- Minimal number of lines to keep above/below cursor
-  vim.opt.sidescrolloff = 8    -- Minimal number of columns to keep left/right of cursor
+  vim.o.splitbelow       = true -- Split windows below
+  vim.o.splitright       = true -- Split windows right
+  vim.opt.scrolloff      = 8   -- Minimal number of lines to keep above/below cursor
+  vim.opt.sidescrolloff  = 8   -- Minimal number of columns to keep left/right of cursor
 
-  vim.opt.statuscolumn  = "%r %l %s"
+  vim.opt.statuscolumn   = "%r %l %s"
 
   -- Make sure folding is enabled but starts unfolded
   vim.opt.foldenable     = true
@@ -117,15 +117,21 @@ function M.setup()
   vim.diagnostic.config({
     update_in_insert = false,
     severity_sort = true,
-    virtual_text = {
-      virt_text_pos = "eol_right_align",  -- Align to end of line and right-align
-      current_line = true,
-      source = "if_many",
+    signs = {
+      text = {
+        [vim.diagnostic.severity.ERROR] = " ",
+        [vim.diagnostic.severity.WARN] = " ",
+        [vim.diagnostic.severity.HINT] = " ",
+        [vim.diagnostic.severity.INFO] = " ",
+      },
       severity = {
         min = vim.diagnostic.severity.WARN, -- Show only WARN and above (hide HINT)
       },
     },
-    signs = {
+    virtual_text = {
+      virt_text_pos = "eol_right_align", -- Align to end of line and right-align
+      current_line = true,
+      source = "if_many",
       severity = {
         min = vim.diagnostic.severity.WARN, -- Show only WARN and above (hide HINT)
       },
@@ -158,6 +164,42 @@ function M.setup()
   --     },
   --   },
   -- })
+-- Global state to keep track of mode
+  local use_virtual_text = true
+
+  local function swap_diagnostics()
+    use_virtual_text = not use_virtual_text
+
+    if use_virtual_text then
+      vim.diagnostic.config({
+        virtual_text = {
+          virt_text_pos = "eol_right_align",
+          current_line = true,
+          source = "if_many",
+          severity = {
+            min = vim.diagnostic.severity.WARN,
+          },
+        },
+        virtual_lines = false,
+      })
+      vim.notify("Diagnostics: using virtual_text", vim.log.levels.INFO)
+    else
+      vim.diagnostic.config({
+        virtual_text = false,
+        virtual_lines = {
+          current_line = true,
+          source = "if_many",
+          severity = {
+            min = vim.diagnostic.severity.WARN,
+          },
+        },
+      })
+      vim.notify("Diagnostics: using virtual_lines", vim.log.levels.INFO)
+    end
+  end
+
+  -- Keymap to toggle diagnostics display
+  vim.keymap.set("n", "<leader>xv", swap_diagnostics, { desc = "Toggle virtual_text / virtual_lines" })
 end
 
 return M

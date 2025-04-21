@@ -69,9 +69,11 @@ return {
         "<leader>tf",
         function()
           local builtin = require("telescope.builtin")
-          builtin.find_files(require("telescope.themes").get_ivy({}))
+          builtin.find_files(require("telescope.themes").get_ivy({
+            no_ignore = true
+          }))
         end,
-        desc = "Lists files in your current working directory, respects .gitignore",
+        desc = "Lists files in your current working directory, does not respect .gitignore",
       },
       {
         "<leader>tw",

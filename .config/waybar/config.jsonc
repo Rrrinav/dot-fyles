@@ -81,7 +81,7 @@
     "format-charging": " {icon} {capacity}%",
     "format-pluged": " {icon} {capacity}%",
     "format-icons": {
-      "default": ["", "", "", "", ""],
+      "default": [" ", " ", " ", " ", " "],
     },
   },
   "disk": {
@@ -137,7 +137,7 @@
     "rewrite": {
       "(.*)Brave": " $1",
       "(.*) Mozilla Firefox": " $1",
-      ".*nvim(.*)": " [ NVIM ]",
+      ".*nvim(.*)": "  [ NVIM ]",
       ".*[^n]vim(.*)": " [ VIM ]",
       ".*spotify.*": "󰓇 Spotify",
       ".*thunar.*": "󰉋 Files",

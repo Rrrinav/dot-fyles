@@ -1,5 +1,6 @@
 local copilot = require "copilot.api"
 return {
+  { 'AndreM222/copilot-lualine' },
   {
     "j-hui/fidget.nvim",
     opts = {
@@ -73,8 +74,8 @@ return {
         }
 
         local ok, api = pcall(require, "copilot.api")
-        local status = ok and api.status.data and api.status.data.status or ""
-        return colors[status] or colors[""]
+        local state = (ok and api.status and api.status.data and api.status.data.status) or ""
+        return colors[state] or colors[""]
       end
 
       require("lualine").setup({
@@ -189,14 +190,14 @@ return {
               icon = "",
             },
             { "progress", separator = " ", padding = { left = 1, right = 0 } },
-            { "location", padding = { left = 0, right = 1 } },
-            { copilot_status },
+            -- { "location", padding = { left = 0, right = 1 } },
+            { 'copilot' },
           },
-          lualine_z = {
-            function()
-              return " " .. os.date("%R")
-            end,
-          },
+          -- lualine_z = {
+          --   function()
+          --     return " " .. os.date("%R")
+          --   end,
+          -- },
         },
         extensions = { "neo-tree", "lazy", "fzf" },
       }
@@ -224,19 +225,14 @@ return {
     end,
   },
   {
-      "pmouraguedes/neodarcula.nvim",
-      lazy = false,
-      priority = 1000,
-  },
-  {
     "EdenEast/nightfox.nvim",
     opts = {
       options = {
         styles = {
-          comments = "italic",
-          -- keywords = "none",
-          types = "italic,bold",
-          strings = "italic",
+          comments = nil,
+          keywords = nil,
+          types = nil,
+          strings = nil,
         }
       }
     }
@@ -279,12 +275,28 @@ return {
     config = true
   },
   {
+    'mellow-theme/mellow.nvim',
+    config = function ()
+      vim.g.mellow_italic_comments  = false;
+      vim.g.mellow_italic_keywords  = false;
+      vim.g.mellow_italic_booleans  = false;
+      vim.g.mellow_italic_functions = false;
+      vim.g.mellow_italic_variables = false;
+      vim.g.mellow_italic_namespaces = false;
+      vim.g.mellow_highlight_overrides = {
+        ["Type"] = { fg = "#A383D6" },
+        ["Function"] = { fg = "#96ebc3" }
+      }
+    end
+  },
+  { 'Mofiqul/dracula.nvim' },
+  {
     "sainnhe/sonokai",
     config = function()
-      vim.g.sonokai_enable_italic = true
-      vim.g.sonokai_style = 'atlantis'
-      vim.g.sonokai_enable_italic = true
-      vim.g.sonokai_better_performance = 1
+      -- vim.g.sonokai_enable_italic = true
+      -- vim.g.sonokai_style = 'atlantis'
+      -- vim.g.sonokai_enable_italic = true
+      -- vim.g.sonokai_better_performance = 1
     end,
   },
   {
@@ -294,10 +306,10 @@ return {
         CursorLine = { bg = '#41454f' }, -- Fixed: String key instead of a variable
       },
       code_style = {
-        comments = 'italic',
-        keywords = 'bold',
+        comments = 'none',
+        keywords = 'none',
         functions = 'none',
-        strings = 'italic',
+        strings = 'none',
         variables = 'none'
       },
     },

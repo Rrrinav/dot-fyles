@@ -133,38 +133,6 @@ return {
       end)
 
       -- Customize cursor appearances
-      local hl = vim.api.nvim_set_hl
-      hl(0, "MultiCursorCursor", {
-        bg = "#666666",
-        fg = "#ffffff",
-        bold = true,
-        nocombine = true
-      })
-      -- Visual selections: semi-transparent blue
-      hl(0, "MultiCursorVisual", {
-        bg = "#264f78",
-        blend = 50
-      })
-      -- Sign column indicators
-      hl(0, "MultiCursorSign", {
-        fg = "#666666",
-        bold = true
-      })
-      -- Disabled cursor state: dimmed purple
-      hl(0, "MultiCursorDisabledCursor", {
-        bg = "#663399",
-        fg = "#cccccc"
-      })
-      -- Disabled visual state: very dim blue
-      hl(0, "MultiCursorDisabledVisual", {
-        bg = "#1a3352",
-        blend = 70
-      })
-      -- Disabled sign state
-      hl(0, "MultiCursorDisabledSign", {
-        fg = "#663399",
-        blend = 50
-      })
     end
   },
   {

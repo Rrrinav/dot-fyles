@@ -47,16 +47,6 @@ return {
       },
     },
     config = function()
-      local signs = {
-        Error = " ",
-        Warn = " ",
-        Hint = " ",
-        Info = " ",
-      }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-      end
       -- vim.diagnostic.config({virtual_text = false})
       local lspconfig = require("lspconfig")
       -- LSP keybindings
@@ -81,9 +71,9 @@ return {
         vim.keymap.set("n", "gd", function()
           vim.lsp.buf.definition()
           if #vim.fn.getqflist() == 1 then vim.cmd('cc 1') end
-        end, with_desc("Go to definition", bufnr))                                                               -- Go to definition
+        end, with_desc("Go to definition", bufnr))                                              -- Go to definition
 
-        vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", with_desc("Hover", bufnr))            -- Hover
+        vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", with_desc("Hover", bufnr)) -- Hover
         -- Diagnostics
         vim.keymap.set(
           "n",
@@ -131,60 +121,11 @@ return {
       local default_config = {
         on_attach = on_attach,
       }
-
-      require('lspconfig').pylsp.setup {
-        settings = {
-          pylsp = {
-            plugins = {
-              jedi_completion = {
-                include_params = true,
-              },
-              pycodestyle = { enabled = false },
-            },
-          },
-        },
-      }
       -- Automatically setup servers installed via Mason
       require("mason-lspconfig").setup_handlers({
         -- Default handler
         function(server_name)
           lspconfig[server_name].setup(default_config)
-        end,
-        -- Override configs for specific servers
-        -- ["lua_ls"] = function()
-        --   lspconfig.lua_ls.setup(vim.tbl_extend("force", default_config, {
-        --     on_init = function(client)
-        --       if client.workspace_folders then
-        --         local path = client.workspace_folders[1].name
-        --         if path ~= vim.fn.stdpath('config') and (vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc')) then
-        --           return
-        --         end
-        --       end
-        --     end,
-        --     cmd = { "lua-language-server", "--force-accept-workspace" },
-        --     settings = {
-        --       Lua = {
-        --         workspace = {
-        --           checkThirdParty = false,                           -- Disable unnecessary third-party library checks
-        --         },
-        --         telemetry = { enable = false },
-        --       },
-        --     },
-        --   }))
-        -- end,
-        ["pyright"] = function()
-          lspconfig.pyright.setup(vim.tbl_extend("force", default_config, {
-            settings = {
-              pylsp = {
-                plugins = {
-                  jedi_completion = {
-                    include_params = true,
-                  },
-                  pycodestyle = { enabled = false },
-                },
-              },
-            },
-          }))
         end,
         ["pylsp"] = function()
           lspconfig.pyright.setup(vim.tbl_extend("force", default_config, {
@@ -206,6 +147,58 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = {
+      link = {
+        -- Turn on / off inline link icon rendering.
+        enabled = true,
+        -- Additional modes to render links.
+        render_modes = true,
+        -- How to handle footnote links, start with a '^'.
+        footnote = {
+          -- Turn on / off footnote rendering.
+          enabled = true,
+          -- Replace value with superscript equivalent.
+          superscript = true,
+          -- Added before link content.
+          prefix = '',
+          -- Added after link content.
+          suffix = '',
+        },
+        -- Inlined with 'image' elements.
+        image = '󰥶 ',
+        -- Inlined with 'email_autolink' elements.
+        email = '󰀓 ',
+        -- Fallback icon for 'inline_link' and 'uri_autolink' elements.
+        hyperlink = '󰌹 ',
+        -- Applies to the inlined icon as a fallback.
+        highlight = 'RenderMarkdownLink',
+        -- Applies to WikiLink elements.
+        wiki = {
+          icon = '󱗖 ',
+          body = function()
+            return nil
+          end,
+          highlight = 'RenderMarkdownWikiLink',
+        },
+        -- Define custom destination patterns so icons can quickly inform you of what a link
+        -- contains. Applies to 'inline_link', 'uri_autolink', and wikilink nodes. When multiple
+        -- patterns match a link the one with the longer pattern is used.
+        -- The key is for healthcheck and to allow users to change its values, value type below.
+        -- | pattern   | matched against the destination text, @see :h lua-pattern       |
+        -- | icon      | gets inlined before the link text                               |
+        -- | highlight | optional highlight for 'icon', uses fallback highlight if empty |
+        custom = {
+          web = { pattern = '^http', icon = '󰖟 ' },
+          discord = { pattern = 'discord%.com', icon = '󰙯 ' },
+          github = { pattern = 'github%.com', icon = '󰊤 ' },
+          gitlab = { pattern = 'gitlab%.com', icon = '󰮠 ' },
+          google = { pattern = 'google%.com', icon = '󰊭 ' },
+          neovim = { pattern = 'neovim%.io', icon = ' ' },
+          reddit = { pattern = 'reddit%.com', icon = '󰑍 ' },
+          stackoverflow = { pattern = 'stackoverflow%.com', icon = '󰓌 ' },
+          wikipedia = { pattern = 'wikipedia%.org', icon = '󰖬 ' },
+          youtube = { pattern = 'youtube%.com', icon = '󰗃 ' },
+        },
+      },
       code = {
         sign = false,
         width = "block",

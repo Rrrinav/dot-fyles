@@ -7,7 +7,7 @@ ColumnLimit: 140
 # Make pointer align to the variable name rather than the type
 PointerBindsToType: false
 # Prevent if statements from being on a single line
-AllowShortIfStatementsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: false
 # Allow loops with single statements to omit braces
 AllowShortBlocksOnASingleLine: true
 AllowShortLoopsOnASingleLine: true
