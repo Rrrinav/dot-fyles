@@ -2,7 +2,7 @@ local M = {}
 
 function M.setup()
   local bg_color = "#181818"
-  --local bg_color = "#161617"
+  -- local bg_color = "#18181f"
   local function get_hl_color(hl_group, attr)
     -- Get the highlight group definition (using 0 for global)
     local hl = vim.api.nvim_get_hl(0, { name = hl_group })
@@ -62,11 +62,11 @@ function M.setup()
   vim.api.nvim_set_hl(0, "LineNr",          { bg = bg_color, fg = fg_color })
   vim.api.nvim_set_hl(0, "SignColumn",      { bg = bg_color, fg = fg_color })
 
-  vim.api.nvim_set_hl(0, 'Visual', { bg = '#1A2C41' })
+  vim.api.nvim_set_hl(0, 'Visual', { bg = '#2a2a2a' })
   local cursor_line_col = "#222222";
-  local comment_col     = "#6C7380";
+  -- vim.api.nvim_set_hl(0, "Comment",                 { fg = comment_col, italic = true})
+  -- local comment_col     = "#6C7380";
   vim.api.nvim_set_hl(0, "CursorLine",              { bg = cursor_line_col })
-  vim.api.nvim_set_hl(0, "Comment",                 { fg = comment_col, italic = false })
   vim.api.nvim_set_hl(0, "CursorLineNr",            { bg = cursor_line_col, fg = Operator_fg, bold = true })
   vim.api.nvim_set_hl(0, "CursorLineSign",          { bg = cursor_line_col})
   vim.api.nvim_set_hl(0, "SignColumnSB",            { bg = bg_color})

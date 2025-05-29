@@ -98,11 +98,11 @@ function M.setup()
     vim.ui.input({
       prompt = "Enter compile command: ",
     }, function(input)
-        if input then
-          -- Execute the Compile command with the provided input
-          vim.cmd('Compile ' .. input)
-        end
-      end)
+      if input then
+        -- Execute the Compile command with the provided input
+        vim.cmd('Compile ' .. input)
+      end
+    end)
   end, {})
 
   -- Change the current working directory to the directory of the current buffer
@@ -116,6 +116,21 @@ function M.setup()
     end
   end, {})
 
+  -- vim.api.nvim_create_user_command('try_ui', function()
+  --   vim.ui.input({
+  --     prompt = 'Enter your name: ',
+  --     default = 'Rinav',
+  --     completion = 'customlist',
+  --     -- completions = { 'Rinav', 'Ravi', 'Ravi Teja' },
+  --   }, function(name)
+  --     if name then
+  --       print("Hello " .. name)
+  --     else
+  --       print("No name provided")
+  --     end
+  --   end)
+  -- end, {})
+  --
 end
 
 return M

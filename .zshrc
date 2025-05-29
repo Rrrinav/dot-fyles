@@ -1,4 +1,3 @@
-export USER="admin"
 export EDITOR="nvim"
 if [ -f /etc/zshrc ]; then
   source /etc/zshrc
@@ -34,9 +33,8 @@ source ~/.cache/wal/colors-tty.sh
 
 eval "$(starship init zsh)"
 
-alias ls='lsd'
 alias cat='bat'
-alias vim= 'gvim'
+alias rm='rm -i'
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -162,6 +160,10 @@ if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
   cd -- "$cwd"
 fi
 rm -f -- "$tmp"
+}
+
+function based() {
+  echo "[ You are super based mate! ]\n"
 }
 
 export PATH=$PATH:/home/rinav/.spicetify

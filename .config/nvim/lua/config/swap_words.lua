@@ -138,6 +138,7 @@ function M.setup()
     move_to_next_word()
     swap_word()
   end, { noremap = true, silent = true, desc = "Save the current word, move to the next word, and swap" })
+
   vim.keymap.set('n', '<A-M>', function()
     save_word()
     move_to_prev_word()

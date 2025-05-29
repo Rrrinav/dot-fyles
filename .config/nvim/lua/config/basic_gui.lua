@@ -23,8 +23,9 @@ function M.setup()
   vim.opt.number         = true
   vim.opt.relativenumber = true
   vim.opt.cursorline     = true
-  vim.opt.showmatch      = true -- Highlight matching parentheses
+  vim.opt.showmatch      = false-- Highlight matching parentheses
   vim.opt.termguicolors  = true -- Enable true color support
+  vim.opt.matchtime      = 0
 
 
   vim.opt.fillchars = {
@@ -44,9 +45,13 @@ function M.setup()
   vim.opt.numberwidth = 6
 
   vim.filetype.add({
-    pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+    pattern = {
+      [".*/hypr/.*%.conf"] = "hyprlang",
+    },
+    extension = {
+      ebnf = "ebnf",
+    },
   })
-
 
   -- Indentation
   vim.opt.expandtab   = true -- Use spaces instead of tabs
@@ -80,13 +85,13 @@ function M.setup()
   -- Show whitespace
   vim.opt.list        = true
   vim.opt.listchars   = {
-    lead     = ' ',
-    trail    = '-',
-    extends  = '→',
-    precedes = '←',
-    tab      = ' ',
+    lead = ' ', -- ·
+    tab = '» ',
+    trail = '-',
+    extends = '›',
+    precedes = '‹',
   }
-  vim.api.nvim_set_hl(0, 'CustomListChars', { fg = '#80f0f0' }) -- Subtle
+  vim.api.nvim_set_hl(0, 'CustomListChars', { fg = '#4a4a6a' }) -- Subtle
   vim.api.nvim_set_hl(0, 'Whitespace', { link = 'CustomListChars' })
 
 
@@ -118,12 +123,12 @@ function M.setup()
     update_in_insert = false,
     severity_sort = true,
     signs = {
-      text = {
-        [vim.diagnostic.severity.ERROR] = " ",
-        [vim.diagnostic.severity.WARN] = " ",
-        [vim.diagnostic.severity.HINT] = " ",
-        [vim.diagnostic.severity.INFO] = " ",
-      },
+      -- text = {
+      --   [vim.diagnostic.severity.ERROR] = " ",
+      --   [vim.diagnostic.severity.WARN] = " ",
+      --   [vim.diagnostic.severity.HINT] = " ",
+      --   [vim.diagnostic.severity.INFO] = " ",
+      -- },
       severity = {
         min = vim.diagnostic.severity.WARN, -- Show only WARN and above (hide HINT)
       },
@@ -132,6 +137,7 @@ function M.setup()
       virt_text_pos = "eol_right_align", -- Align to end of line and right-align
       current_line = true,
       source = "if_many",
+      prefix = "",
       severity = {
         min = vim.diagnostic.severity.WARN, -- Show only WARN and above (hide HINT)
       },
@@ -200,6 +206,23 @@ function M.setup()
 
   -- Keymap to toggle diagnostics display
   vim.keymap.set("n", "<leader>xv", swap_diagnostics, { desc = "Toggle virtual_text / virtual_lines" })
+
+  if vim.g.neovide then
+    vim.o.guifont = "Lilex Nerd Font ExtraLight:h14"  -- Set your preferred font
+
+    -- General GUI tweaks
+    vim.g.neovide_opacity = 0.95
+    vim.g.neovide_scroll_animation_length = 0.2
+    vim.g.neovide_cursor_animation_length = 0.06
+    vim.g.neovide_cursor_trail_size = 0.3
+    vim.g.neovide_refresh_rate = 60
+    vim.g.neovide_fullscreen = false
+    vim.g.neovide_hide_mouse_when_typing = true
+    vim.g.neovide_remember_window_size = true
+    vim.g.neovide_scale_factor = 0.8
+
+    vim.g.neovide_scale_factor = 1.0
+  end
 end
 
 return M

@@ -1,2 +1,12 @@
 {
+  "backend": "meow",
+  "bat-options": ["--style=grid,header,numbers", "--theme=gruvbox-dark", "--color=always"],
+  "meow-options": [
+    {
+      "line-numbers": true
+    },
+    {
+      "line-padding": 2
+    }
+  ]
 }

@@ -47,8 +47,15 @@ local string_nord = "#88a8c8";
 b_str_fg = string_nord
 str_fg = string_nord
 
-vim.api.nvim_set_hl(0, "@string",       { fg = str_fg}) --, italic = true })
-vim.api.nvim_set_hl(0, "String",        { fg = b_str_fg}) --, italic = true })
+-- local cursor_line_col = "#222222";
+local comment_col     = "#6C7380";
+vim.api.nvim_set_hl(0, "Comment",                 { fg = comment_col, italic = true})
+-- vim.api.nvim_set_hl(0, "CursorLine",              { bg = cursor_line_col })
+-- vim.api.nvim_set_hl(0, "CursorLineNr",            { bg = cursor_line_col, fg = Operator_fg, bold = true })
+-- vim.api.nvim_set_hl(0, "CursorLineSign",          { bg = cursor_line_col})
+vim.api.nvim_set_hl(0, "@string",       { fg = str_fg })   -- , italic = true })
+vim.api.nvim_set_hl(0, "String",        { fg = b_str_fg}) -- , italic = true })
+vim.api.nvim_set_hl(0, "Character",        { fg = b_str_fg, bold = true}) -- , italic = true })
 vim.api.nvim_set_hl(0, "@namespace",    { italic = false })
 
 hl(0, "BlinkCmpKind",       { ctermfg = 14, fg= Operator_fg })

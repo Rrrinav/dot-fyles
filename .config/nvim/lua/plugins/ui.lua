@@ -21,20 +21,20 @@ return {
     opts = {
       preset = "helix",
       spec = {
-        { "<leader>t",      group = "Telescope plugins" },
-        { "<leader>m",      group = "Mini Plugins", icon = '󱀧 ' },
-        { "<leader>ms",     group = "Mini Surround", icon = '󱀧 ' },
-        { "<leader>b",      group = "Buffer management" },
-        { "<leader>w",      group = "Window management" },
-        { "<leader>u",      group = "UI" },
-        { "<leader>c",      group = "Code" },
-        { "<leader>g",      group = "Git" },
-        { "gb",             group = "Lsp go tos but in different buffer", icon = "󰩗" },
-        { "<leader>x",      group = "Diagnotics", icon = "" },
-        { "<leader>q",      group = "Quickfix List & Session Management" },
-        { "<leader><Tab>",  group = "Tabs (key = tab)" },
+        { "<leader>t", group = "Telescope plugins" },
+        { "<leader>m", group = "Mini Plugins", icon = '󱀧 ' },
+        { "<leader>ms", group = "Mini Surround", icon = '󱀧 ' },
+        { "<leader>b", group = "Buffer management" },
+        { "<leader>w", group = "Window management" },
+        { "<leader>u", group = "UI" },
+        { "<leader>c", group = "Code" },
+        { "<leader>g", group = "Git" },
+        { "gb", group = "Lsp go tos but in different buffer", icon = "󰩗" },
+        { "<leader>x", group = "Diagnotics", icon = "" },
+        { "<leader>q", group = "Quickfix List & Session Management" },
+        { "<leader><Tab>", group = "Tabs (key = tab)" },
         { "<leader><Tab>m", group = "Move tab" },
-        { "<leader>f",      group = "Terminal / file" }
+        { "<leader>f", group = "Terminal / file" }
       },
     },
   },
@@ -53,35 +53,9 @@ return {
       vim.g.lualine_laststatus = vim.o.laststatus
     end,
     opts = function()
-      local function copilot_status()
-        local ok, api = pcall(require, "copilot.api")
-        if not ok or not api.status then return " " end -- Copilot logo (Off)
-
-        local status = api.status.data
-        if status == nil then return "󰦕 " end -- Spinner (Loading)
-        if status.status == "InProgress" then return "󱥸 " end -- Dots (Thinking)
-        if status.status == "Idle" then return " " end -- Copilot logo (Idle)
-        if status.status == "Normal" then return " " end -- Active (Magic wand)
-        return " " -- Default (Failsafe)
-      end
-
-      local function copilot_color()
-        local colors = {
-          ["Idle"]       = { fg = "#7aa2f7" },  -- Blue (Idle)
-          ["InProgress"] = { fg = "#e0af68" },  -- Yellow (Thinking)
-          ["Normal"]     = { fg = "#9ece6a" },  -- Green (Active)
-          [""]           = { fg = "#565f89" }   -- Grey (Unknown/Off)
-        }
-
-        local ok, api = pcall(require, "copilot.api")
-        local state = (ok and api.status and api.status.data and api.status.data.status) or ""
-        return colors[state] or colors[""]
-      end
-
       require("lualine").setup({
         sections = {
           lualine_x = {
-            { copilot_status, color = copilot_color },
             "encoding", "fileformat", "filetype"
           },
         }
@@ -95,9 +69,9 @@ return {
           Hint = " ",
         },
         git = {
-          added = " ",
-          modified = " ",
-          removed = " ",
+          added = "+", --  ",
+          modified = "~", -- " " 
+          removed = "-" -- " ",
         },
       }
 
@@ -118,7 +92,8 @@ return {
           globalstatus = true,
           disabled_filetypes = { statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" } },
           section_separators = { left = '', right = '' },
-          component_separators = { left = '', right = '' },
+       -- component_separators = { left = '', right = '' },
+          component_separators = { left = '│', right = '│' },
         },
         sections = {
           lualine_a = { "mode" },
@@ -238,23 +213,47 @@ return {
     }
   },
   {
+    "thesimonho/kanagawa-paper.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      styles = {
+        -- style for comments
+        comment = { italic = false },
+        -- style for functions
+        functions = { italic = false },
+        -- style for keywords
+        keyword = { italic = false, bold = false },
+        -- style for statements
+        statement = { italic = false, bold = false },
+        -- style for types
+        type = { italic = false },
+      },
+      colors ={
+        theme = {
+          ink = { ui = { bg = "#18181f" }}
+        }
+      }
+    },
+  },
+  {
     "gbprod/nord.nvim",
     lazy = false,
     priority = 1000,
     config = function()
       require("nord").setup({
-        transparent = false, -- Enable this to disable setting the background color
-        terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
-        diff = { mode = "bg" }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
-        borders = true, -- Enable the border between verticaly split windows visible
-        errors = { mode = "bg" }, -- Display mode for errors and diagnostics
+        transparent = false,        -- Enable this to disable setting the background color
+        terminal_colors = true,     -- Configure the colors used when opening a `:terminal` in Neovim
+        diff = { mode = "bg" },     -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
+        borders = true,             -- Enable the border between verticaly split windows visible
+        errors = { mode = "bg" },   -- Display mode for errors and diagnostics
         -- values : [bg|fg|none]
         search = { theme = "vim" }, -- theme for highlighting search results
         -- values : [vim|vscode]
         styles = {
           comments = { italic = true },
           keywords = { italic = true },
-          functions = {  },
+          functions = {},
           variables = {},
         },
 
@@ -276,13 +275,13 @@ return {
   },
   {
     'mellow-theme/mellow.nvim',
-    config = function ()
-      vim.g.mellow_italic_comments  = false;
-      vim.g.mellow_italic_keywords  = false;
-      vim.g.mellow_italic_booleans  = false;
-      vim.g.mellow_italic_functions = false;
-      vim.g.mellow_italic_variables = false;
-      vim.g.mellow_italic_namespaces = false;
+    config = function()
+      vim.g.mellow_italic_comments     = false;
+      vim.g.mellow_italic_keywords     = false;
+      vim.g.mellow_italic_booleans     = false;
+      vim.g.mellow_italic_functions    = false;
+      vim.g.mellow_italic_variables    = false;
+      vim.g.mellow_italic_namespaces   = false;
       vim.g.mellow_highlight_overrides = {
         ["Type"] = { fg = "#A383D6" },
         ["Function"] = { fg = "#96ebc3" }
@@ -313,7 +312,7 @@ return {
         variables = 'none'
       },
     },
-  },
+  }, -- Using lazy.nvim
   {
     'nanozuki/tabby.nvim',
     dependencies = 'nvim-tree/nvim-web-devicons',
@@ -533,4 +532,197 @@ return {
       }
     end
   },
+  {
+    "sphamba/smear-cursor.nvim",
+    opts = {
+      -- Smear cursor when switching buffers or windows.
+      smear_between_buffers = true,
+
+      -- Smear cursor when moving within line or to neighbor lines.
+      -- Use `min_horizontal_distance_smear` and `min_vertical_distance_smear` for finer control
+      smear_between_neighbor_lines = true,
+
+      -- Draw the smear in buffer space instead of screen space when scrolling
+      scroll_buffer_space = true,
+
+      -- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
+      -- Smears will blend better on all backgrounds.
+      legacy_computing_symbols_support = false,
+
+      -- Smear cursor in insert mode.
+      -- See also `vertical_bar_cursor_insert_mode` and `distance_stop_animating_vertical_bar`.
+      smear_insert_mode = true,
+      stiffness = 0.5,
+      trailing_stiffness = 0.4,
+    }
+  },
+  {
+    'stevearc/dressing.nvim',
+    opts = {
+      input = {
+        -- Set to false to disable the vim.ui.input implementation
+        enabled = false,
+
+        -- Default prompt string
+        default_prompt = "Input",
+
+        -- Trim trailing `:` from prompt
+        trim_prompt = true,
+
+        -- Can be 'left', 'right', or 'center'
+        title_pos = "left",
+
+        -- The initial mode when the window opens (insert|normal|visual|select).
+        start_mode = "insert",
+
+        -- These are passed to nvim_open_win
+        border = "rounded",
+        -- 'editor' and 'win' will default to being centered
+        relative = "cursor",
+
+        -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+        prefer_width = 40,
+        width = nil,
+        -- min_width and max_width can be a list of mixed types.
+        -- min_width = {20, 0.2} means "the greater of 20 columns or 20% of total"
+        max_width = { 140, 0.9 },
+        min_width = { 20, 0.2 },
+
+        buf_options = {},
+        win_options = {
+          -- Disable line wrapping
+          wrap = false,
+          -- Indicator for when text exceeds window
+          list = true,
+          listchars = "precedes:…,extends:…",
+          -- Increase this for more context when text scrolls off the window
+          sidescrolloff = 0,
+        },
+
+        -- Set to `false` to disable
+        mappings = {
+          n = {
+            ["<Esc>"] = "Close",
+            ["<CR>"] = "Confirm",
+          },
+          i = {
+            ["<C-c>"] = "Close",
+            ["<CR>"] = "Confirm",
+            ["<Up>"] = "HistoryPrev",
+            ["<Down>"] = "HistoryNext",
+          },
+        },
+
+        override = function(conf)
+          -- This is the config that will be passed to nvim_open_win.
+          -- Change values here to customize the layout
+          return conf
+        end,
+
+        -- see :help dressing_get_config
+        get_config = nil,
+      },
+      select = {
+        -- Set to false to disable the vim.ui.select implementation
+        enabled = true,
+
+        -- Priority list of preferred vim.select implementations
+        backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
+
+        -- Trim trailing `:` from prompt
+        trim_prompt = true,
+
+        -- Options for telescope selector
+        -- These are passed into the telescope picker directly. Can be used like:
+        -- telescope = require('telescope.themes').get_ivy({...})
+        telescope = require('telescope.themes').get_ivy({...}),
+
+        -- Options for fzf selector
+        fzf = {
+          window = {
+            width = 0.5,
+            height = 0.4,
+          },
+        },
+
+        -- Options for fzf-lua
+        fzf_lua = {
+          -- winopts = {
+          --   height = 0.5,
+          --   width = 0.5,
+          -- },
+        },
+
+        -- Options for nui Menu
+        nui = {
+          position = "50%",
+          size = nil,
+          relative = "editor",
+          border = {
+            style = "rounded",
+          },
+          buf_options = {
+            swapfile = false,
+            filetype = "DressingSelect",
+          },
+          win_options = {
+            winblend = 0,
+          },
+          max_width = 80,
+          max_height = 40,
+          min_width = 40,
+          min_height = 10,
+        },
+
+        -- Options for built-in selector
+        builtin = {
+          -- Display numbers for options and set up keymaps
+          show_numbers = true,
+          -- These are passed to nvim_open_win
+          border = "rounded",
+          -- 'editor' and 'win' will default to being centered
+          relative = "editor",
+
+          buf_options = {},
+          win_options = {
+            cursorline = true,
+            cursorlineopt = "both",
+            -- disable highlighting for the brackets around the numbers
+            winhighlight = "MatchParen:",
+            -- adds padding at the left border
+            statuscolumn = " ",
+          },
+
+          -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+          -- the min_ and max_ options can be a list of mixed types.
+          -- max_width = {140, 0.8} means "the lesser of 140 columns or 80% of total"
+          width = nil,
+          max_width = { 140, 0.8 },
+          min_width = { 40, 0.2 },
+          height = nil,
+          max_height = 0.9,
+          min_height = { 10, 0.2 },
+
+          -- Set to `false` to disable
+          mappings = {
+            ["<Esc>"] = "Close",
+            ["<C-c>"] = "Close",
+            ["<CR>"] = "Confirm",
+          },
+
+          override = function(conf)
+            -- This is the config that will be passed to nvim_open_win.
+            -- Change values here to customize the layout
+            return conf
+          end,
+        },
+
+        -- Used to override format_item. See :help dressing-format
+        format_item_override = {},
+
+        -- see :help dressing_get_config
+        get_config = nil,
+      },
+    },
+  }
 }

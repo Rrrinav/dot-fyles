@@ -1,8 +1,8 @@
 require("config.lazy")
 
-vim.cmd.colorscheme("nightfox")
+vim.cmd.colorscheme("kanagawa-paper")
 require("config.essential_highlights")
-require("config.highlights").setup()
+-- require("config.highlights").setup()
 require("config.req_highlights") -- Don't remove
 require("config.keymaps")
 require("config.autocmds")

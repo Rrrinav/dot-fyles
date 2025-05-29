@@ -1,6 +1,7 @@
+-- Main autocmd group for general settings
 local autocmd_group = vim.api.nvim_create_augroup("CustomSettings", { clear = true })
 
--- Restore cursor position when opening file
+-- Restore cursor position on file open
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = autocmd_group,
   pattern = "*",
@@ -12,8 +13,9 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
-
+-- Set commentstring for C/C++
 vim.api.nvim_create_autocmd("FileType", {
+  group = autocmd_group,
   pattern = { "c", "cpp" },
   callback = function()
     vim.bo.commentstring = "//%s"
@@ -29,37 +31,31 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('mariasolos/close_with_q', { clear = true }),
-  desc = 'Close with <q>',
-  pattern = {
-    'git',
-    'help',
-    'man',
-    'qf',
-    'query',
-    'scratch',
-  },
+-- Close help-like buffers with 'q'
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("CustomSettings/CloseWithQ", { clear = true }),
+  pattern = { "git", "help", "man", "qf", "query", "scratch" },
+  desc = "Close with <q>",
   callback = function(args)
-    vim.keymap.set('n', 'q', '<cmd>quit<cr>', { buffer = args.buf })
+    vim.keymap.set("n", "q", "<cmd>quit<cr>", { buffer = args.buf, silent = true })
   end,
 })
 
-
+-- Disable LSP on certain file patterns
 vim.api.nvim_create_autocmd("LspAttach", {
+  group = autocmd_group,
   callback = function(ev)
     local fname = vim.fn.expand('%:t')
-    if fname:match("%.env$") or
-        fname:match("%.example$") or
-        fname:match("^secret%.") or
-        fname:match("%.config$") then
-      vim.cmd('LspStop')
-      vim.notify("LSP stopped after attachment")
+    if fname:match("%.env$") or fname:match("%.example$") or fname:match("^secret%.") or fname:match("%.config$") then
+      vim.cmd("LspStop")
+      vim.notify("LSP stopped after attachment", vim.log.levels.INFO)
     end
   end,
 })
--- JavaScript, TypeScript, JSX, TSX, JSON
+
+-- Indentation for JS/TS/JSON
 vim.api.nvim_create_autocmd("FileType", {
+  group = autocmd_group,
   pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json" },
   callback = function()
     vim.opt_local.shiftwidth = 2
@@ -69,25 +65,18 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_create_autocmd('CmdwinEnter', {
-  group = vim.api.nvim_create_augroup('mariasolos/execute_cmd_and_stay', { clear = true }),
-  desc = 'Execute command and stay in the command-line window',
+-- Map <S-CR> in command-line window to run and stay
+vim.api.nvim_create_autocmd("CmdwinEnter", {
+  group = vim.api.nvim_create_augroup("CustomSettings/CmdWinStay", { clear = true }),
+  desc = "Execute command and stay in the command-line window",
   callback = function(args)
-    vim.keymap.set({ 'n', 'i' }, '<S-Cr>', '<cr>q:', { buffer = args.buf })
+    vim.keymap.set({ "n", "i" }, "<S-CR>", "<CR>q:", { buffer = args.buf, silent = true })
   end,
 })
 
--- If anyone needs their own completion
--- vim.api.nvim_create_autocmd('LspAttach', {
---   callback = function(ev)
---     local client = vim.lsp.get_client_by_id(ev.data.client_id)
---     if client and client:supports_method("textDocument/completion") then
---       vim.lsp.completion.enable(true, client.id, ev.buf, {autotrigger = true})
---     end
---   end
--- })
-
+-- Terminal UI adjustments
 vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
+  group = vim.api.nvim_create_augroup("CustomSettings/Terminal", { clear = true }),
   pattern = "*",
   callback = function()
     vim.wo.winbar = ""

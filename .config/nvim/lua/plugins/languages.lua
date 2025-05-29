@@ -1,39 +1,60 @@
 return {
   {
-    "williamboman/mason.nvim",
-    cmd = "Mason",
-    build = ":MasonUpdate",
-    opts = {
-      ui = {
-        icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗",
-        },
-      },
-    },
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    opts = {
-      ensure_installed = {
-        "lua_ls",        -- Lua
-        "rust_analyzer", -- Rust
-        "clangd",        -- C/C++
-        -- Add more LSPs as needed
-      },
-      automatic_installation = true,
-    },
-  },
-  {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     opts = {
       inlay_hints = { enabled = false },
     },
     dependencies = {
-      "mason.nvim",
-      "mason-lspconfig.nvim",
+      {
+        "mason.nvim" ,
+        cmd = "Mason",
+        build = ":MasonUpdate",
+        opts = {
+          ui = {
+            icons = {
+              package_installed = "✓",
+              package_pending = "➜",
+              package_uninstalled = "✗",
+            },
+          },
+        },
+      },
+      {
+        "mason-lspconfig.nvim",
+        opts = {
+          ensure_installed = {},
+          automatic_enable = {
+            exclude = { "pylsp" }
+          }
+        },
+        config = function ()
+          if vim.loop.os_uname().sysname == "Windows_NT" then
+          require("mason-lspconfig").setup({
+            ensure_installed = {
+              "clangd",
+              "lua_ls",
+              "pylsp",
+              "rust_analyzer",
+            },
+            automatic_enable = {
+              exclude = { "pylsp", "clangd" }
+            }
+          })
+          end
+          require("mason-lspconfig").setup({
+            ensure_installed = {
+              "clangd",
+              "lua_ls",
+              "pylsp",
+              "rust_analyzer",
+            },
+            automatic_enable = {
+              exclude = { "pylsp" }
+            }
+          })
+        end
+      },
       {
         "folke/lazydev.nvim",
         ft = "lua", -- only load on lua files
@@ -57,92 +78,63 @@ return {
         end
         return opts
       end
-      -- on_attach function for LSP key mappings
-      local on_attach = function(client, bufnr)
-        -- if client.server_capabilities.inlayHintProvider then
-        --     vim.lsp.inlay_hint.enable()
-        -- end
-        vim.keymap.set(
-          "n",
-          "gD",
-          "<cmd>lua vim.lsp.buf.declaration()<CR>",
-          with_desc("Go to declaration", bufnr)
-        ) -- Go to declaration
-        vim.keymap.set("n", "gd", function()
-          vim.lsp.buf.definition()
-          if #vim.fn.getqflist() == 1 then vim.cmd('cc 1') end
-        end, with_desc("Go to definition", bufnr))                                              -- Go to definition
-
-        vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", with_desc("Hover", bufnr)) -- Hover
-        -- Diagnostics
-        vim.keymap.set(
-          "n",
-          "[d",
-          "<cmd>lua vim.diagnostic.goto_prev()<CR>",
-          with_desc("Go to previous diagnostic", bufnr)
-        ) -- Go to previous diagnostic
-        vim.keymap.set(
-          "n",
-          "]d",
-          "<cmd>lua vim.diagnostic.goto_next()<CR>",
-          with_desc("Go to next diagnostic", bufnr)
-        ) -- Go to next diagnostic
-        vim.keymap.set(
-          "n",
-          "<leader>e",
-          "<cmd>lua vim.diagnostic.open_float()<CR>",
-          with_desc("Show line diagnostics", bufnr)
-        ) -- Show line diagnostics
-      end
-      -- LSP keymaps with vertical splits
-      vim.keymap.set("n", "gbD", function()
-        vim.cmd('vsplit')
-        vim.lsp.buf.declaration()
-      end, with_desc("Go to declaration in vsplit", bufnr))
-
-      vim.keymap.set("n", "gbd", function()
-        vim.cmd('vsplit')
+      -- LSP Global Keymaps
+      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+      vim.keymap.set("n", "gd", function()
         vim.lsp.buf.definition()
         if #vim.fn.getqflist() == 1 then
-          vim.cmd('cc 1')
+          vim.cmd("cc 1")
         end
-      end, with_desc("Go to definition in vsplit", bufnr))
-
+      end, { desc = "Go to definition" })
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
+      vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Line diagnostics" })
+      vim.keymap.set("n", "gbD", function()
+        vim.cmd("vsplit")
+        vim.lsp.buf.declaration()
+      end, { desc = "Go to declaration in vsplit" })
+      vim.keymap.set("n", "gbd", function()
+        vim.cmd("vsplit")
+        vim.lsp.buf.definition()
+        if #vim.fn.getqflist() == 1 then
+          vim.cmd("cc 1")
+        end
+      end, { desc = "Go to definition in vsplit" })
       vim.keymap.set("n", "gbr", function()
-        vim.cmd('vsplit')
+        vim.cmd("vsplit")
         vim.lsp.buf.references()
-      end, with_desc("Go to references in vsplit", bufnr))
-
+      end, { desc = "Go to references in vsplit" })
       vim.keymap.set("n", "gbI", function()
-        vim.cmd('vsplit')
+        vim.cmd("vsplit")
         vim.lsp.buf.implementation()
-      end, with_desc("Go to implementation in vsplit", bufnr))
-      -- Default LSP configuration to apply to all servers
-      local default_config = {
-        on_attach = on_attach,
-      }
-      -- Automatically setup servers installed via Mason
-      require("mason-lspconfig").setup_handlers({
-        -- Default handler
-        function(server_name)
-          lspconfig[server_name].setup(default_config)
-        end,
-        ["pylsp"] = function()
-          lspconfig.pyright.setup(vim.tbl_extend("force", default_config, {
-            settings = {
-              pylsp = {
-                plugins = {
-                  jedi_completion = {
-                    include_params = true,
-                  },
-                  pycodestyle = { enabled = false },
-                },
-              },
+      end, { desc = "Go to implementation in vsplit" })
+
+      lspconfig.pylsp.setup({
+        settings = {
+          pylsp = {
+            plugins = {
+              pycodestyle = { enabled = false },  -- disable basic style checks
+              pylint = { enabled = false },       -- disable pylint
+              mccabe = { enabled = false },       -- disable complexity checker
+              pyflakes = { enabled = false },     -- disable pyflakes
+              jedi_completion = { include_params = true }, -- enable param info
             },
-          }))
-        end,
+          },
+        },
       })
+      -- If windows change output executable type in clangd to .exe
+      if vim.loop.os_uname().sysname == "Windows_NT" then
+        lspconfig.clangd.setup({
+          cmd = { "clangd", "--target=x86_64-pc-windows-msvc" },
+          -- Add crash protection:
+          on_attach = function(client, bufnr)
+            client.server_capabilities.semanticTokensProvider = nil
+          end
+        })
+      end
     end,
+  },
+  {
+    "p00f/clangd_extensions.nvim"
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",
